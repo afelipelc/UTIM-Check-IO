@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b Nombre:
+  = @owner.nombre
+%p
+  %b Tipo:
+  = @owner.tipo
+%p
+  %b Clave:
+  = @owner.clave
+%p
+  %b Pe:
+  = @owner.pe
+
+= link_to 'Edit', edit_owner_path(@owner)
+\|
+= link_to 'Back', owners_path

@@ -1,0 +1,46 @@
+#checkin
+  - if flash[:notif]
+    %h4#notif.alert_info= flash[:notif]
+  - if flash[:notice]
+    %h4#notinfo.alert_success= flash[:notice]
+  - if flash[:error]
+    %h4#noterror.alert_error= flash[:error]
+  #searchDevice
+    %span.searchContainer
+      = form_tag "/entries/checkdevice", :remote => "true", :id=>"checkdevform",:method => 'post', :class=>"searchheader"  do
+        = text_field_tag :id, params[:id], :autofocus=>"autofocus", :placeholder => "Códido de dispositivo", :value => ""
+    %span.addNew
+      = link_to image_tag("new.png"), new_device_path, :remote => "true", :title => "Registrar nuevo dispositivo", :class => "imageLink"
+  %div
+    #contenedorImagenView
+      - if @entry.device.owner.nombre
+        = image_tag "user.png"
+      -else
+        = image_tag "scanner.png"
+      %br/
+      - if @entry.device.owner.nombre
+        %span Propietario
+    #datosPropietario
+      %h2= @entry.device.owner.nombre
+      %h3= @entry.device.owner.pe
+    - if @entry.device.tipo
+      #datosDevice
+        %p
+          = @entry.device.tipo 
+          \:
+          %strong= @entry.device.noserie
+        %p
+          Marca
+          %strong= @entry.device.marca
+    .clearLine
+    .checkinTime
+      %span
+        %p.chequeo Entrada
+        %p.tiempo
+          - if @entry.ingreso
+            = @entry.ingreso.strftime("%d %b %y %H:%M:%S")
+      %span
+        %p.chequeo Salida
+        %p.tiempo
+          - if @entry.egreso
+            = @entry.egreso.strftime("%d %b %y %H:%M:%S")

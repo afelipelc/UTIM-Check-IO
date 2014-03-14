@@ -1,0 +1,36 @@
+#logentries
+  - if flash[:notif]
+    %h4#notif.alert_info= flash[:notif]
+  - if flash[:notice]
+    %h4#notinfo.alert_success= flash[:notice]
+  - if flash[:error]
+    %h4#noterror.alert_error= flash[:error]
+  %h3 Registros de ingresos y egresos
+  %div Filtro por fecha
+  #logsTableContainer.tableContainer
+    %table.tablesorter.scrollTable{cellspacing: "0"}
+      %thead.fixedHeader
+        %tr
+          %th Dispositivo
+          %th Propietario
+          %th Ingreso
+          %th Egreso
+      %tbody#logentries.scrollContent{last: "<haml_silent> if @entries </haml_silent><haml_block>#{@entries.to_a.last.id}</haml_block>", style: "height:420px;"}
+        - @entries.each do |entry|
+          %tr.rowentry
+            %td
+              = link_to entry.device.tipo + ": " + entry.device.noserie, logs_entries_path(:id => entry.device), remote: "true"
+            %td
+              #{entry.device.owner.nombre}
+            %td
+              - if entry.ingreso
+                = entry.ingreso.strftime("%d %b %y %H:%M:%S")
+            %td
+              - if entry.egreso
+                = entry.egreso.strftime("%d %b %y %H:%M:%S")
+
+        %tr#infinite-scroll
+  .totales
+    %strong
+      Total de registros mostrados:
+      %span#totallogs= @entries.count

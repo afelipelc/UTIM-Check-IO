@@ -1,0 +1,43 @@
+#dispositivoForm
+  - if flash[:notif]
+    %h4#notif.alert_info= flash[:notif]
+  - if flash[:notice]
+    %h4#notinfo.alert_success= flash[:notice]
+  - if flash[:error]
+    %h4#noterror.alert_error= flash[:error]
+  - if @device.errors
+    %ul
+      - @device.errors.full_messages.each do |msg|
+        %li= msg
+  = form_for(@device, remote: true, :html => { :class => "dispositivoform"}) do |f|
+    #searchDevice
+      %span.searchContainer
+        = f.hidden_field :id
+        = f.text_field :id, :placeholder=>"Código generado", :readonly => "readonly", :class => "deviceidtext"
+      %span.addNew
+        - if @device.id
+          %a{href: "/dispositivos/new", class: "imageLink"}= image_tag "barcode.png", :title => "Imprimir código de dispositivo"
+        - else
+          = image_tag "barcode.png"
+    %div
+      #contenedorImagenView
+        = image_tag "user.png"
+        %br/
+        %span Propietario
+      #datosPropietario
+        = fields_for @device.owner do |p|
+          = p.hidden_field :id
+          = p.text_field :clave, :required=>"required", :autofocus=>"autofocus", :placeholder => "No. Control o Clave de Personal"
+          = p.text_field :nombre, :required=>"required", :placeholder => "Nombre del propietario"
+          = p.select(:pe, [["Programa Educativo", ""],"Administración", "Alimentos", "Contaduría", "Paramédico","TIC"])
+      #datosDevice
+        = f.select(:tipo, [["Tipo de dispositivo", ""],"Laptop", "Cañon", "Cámara", "CPU","Monitor", "Impresora"], :required => "required")
+        = f.select(:marca, [["Marca", ""], "Acer", "Apple", "Asus","Dell", "HP", "Lanix","Lenovo", "Samsung","Sony", "Otra"], :required => "required")
+        = f.text_field :noserie, :required=>"required", :placeholder => "No. de Serie"
+        = f.text_field :color, :placeholder => "Color"
+        = f.text_field :nota, :placeholder => "Noda adicional (opcional)"
+      .clearLine
+      .formDisOptions
+        = f.submit "Guardar", :class=>"botonOk"
+        = succeed "" do
+          %input#cancelsavedisp.botonCancel.modal-link{rel: "#warning", type: "button", value: "Cancelar"}

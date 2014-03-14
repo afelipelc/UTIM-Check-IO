@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  tipo: MyString
+  noserie: MyString
+  marca: MyString
+  color: MyString
+  nota: MyText
+  registro: 2014-03-11 12:44:05
+  ultimavez: 2014-03-11 12:44:05
+
+two:
+  tipo: MyString
+  noserie: MyString
+  marca: MyString
+  color: MyString
+  nota: MyText
+  registro: 2014-03-11 12:44:05
+  ultimavez: 2014-03-11 12:44:05

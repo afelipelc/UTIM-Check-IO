@@ -1,0 +1,557 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+ *= require_self
+ *= require_tree .
+ */
+body{
+	/*background: #F2F2F2;*/
+	/*display: block;*/
+	margin: 0px !important;
+	padding: 0; 
+	text-align: center;
+}
+
+header{
+	
+	background-image: -moz-linear-gradient(#f9f9f9, #f3f3f3);
+	background-image: -webkit-linear-gradient(#f9f9f9, #f3f3f3);
+	background-image: linear-gradient(#f9f9f9, #f3f3f3);
+	background-repeat: repeat-x;
+	/*background: #f3f3f3 url("../images/logo.png") no-repeat left center;*/
+
+	
+	vertical-align: middle;
+	text-shadow: 0 1px 0 #fff;
+	border-bottom: 1px solid #e5e5e5;
+	height: 115px;
+	text-align: left;
+	padding-left: 60px;
+}
+header .logo{
+	/*position: fixed;*/
+	/*float: left;*/
+	/*
+	top: 0;
+	left: 0;
+	margin-top: 10px;
+	z-index: 100;
+	margin-left: 50px;
+	*/
+	display: inline-block;
+	position: relative;
+	margin-top: 20px;
+}
+header .title
+{
+	display: inline-block;
+	width: 60%;
+	position: relative;
+	margin-top: 25px;
+	text-align: center;
+}
+
+header .title h1{
+	font-size: 24px;
+	color: #4D4D4D;
+}
+
+header #formContainer {
+	/*position: fixed;*/
+	/*vertical-align: center;*/
+	/*float: right;*/
+	/*
+	top: 0;
+	right: 0;
+	margin-top:10px;
+	margin-right: 90px;
+	*/
+	display: inline-block;
+	padding-top: 15px;
+	padding-bottom: 0px;
+	position: absolute;
+}
+
+header #formContainer .opciones{
+	display: inline-block;
+	padding-top: 10px;
+	width: 100%;
+}
+
+header #formContainer .opciones a{
+	margin-right: 4px;
+}
+.imageLink:hover{
+	background:#d6d6d6;
+}
+header #formContainer .opciones  a:hover{
+	height: 52px;
+	width: 52px;
+	display: inline-block;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+}
+
+/* General Article */
+article{
+	width: 90%;
+	/*border: 1px solid #ccc;*/
+	display: inline-block;
+	padding-top: 30px;
+	text-align: center;
+}
+/* General Article */
+
+
+article a{
+	color: #2774B8;
+	text-decoration: none;
+}
+article a:hover{
+	color: #1A5A91;
+	text-decoration: underline;
+}
+
+/*Contenedor donde se registra el ingreso o egreso*/
+#checkin, #dispositivoForm
+{
+	width: 650px;
+   /* border: solid 2px #C2C2C2;    */
+    margin-bottom: 0px;
+	text-align: center;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	display: inline-block;
+	padding-bottom: 20px;
+}
+
+/* Checkin View */
+#searchDevice{
+	text-align: left;
+	vertical-align: center;
+	width: 100%;
+	padding-left: 100px;
+	padding-top: 20px;
+}
+#searchDevice .searchContainer{
+float: left;
+margin-top: 10px;
+margin-right: 12px;
+}
+#searchDevice .searchContainer form{
+	
+}
+#searchDevice .searchContainer form #id, .deviceidtext{
+	width: 310px;
+	padding: 4px;
+	font: 26px 'lucida sans', 'trebuchet MS', 'Tahoma';
+
+	border: 1px solid #C7C7C7;
+	-moz-box-shadow: 0 1px 1px #ddd inset, 0 1px 0 #fff;
+	-webkit-box-shadow: 0 1px 1px #ddd inset, 0 1px 0 #fff;
+	box-shadow: 0 1px 1px #ddd inset, 0 1px 0 #fff;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+}
+
+
+#searchDevice span .addNew{
+	/*float: left;*/
+	position: absolute;
+	height: 52px;
+}
+#searchDevice span .addNew a{
+	margin-top: 20px;
+	position: absolute;
+}
+#contenedorImagenView{
+	max-height: 250px;
+	width: 220px;
+	padding: 15px;
+	float: left;
+	margin-left: 30px;
+	/*position: relative;*/
+	/*border: 1px solid #000;*/
+	text-align: center;
+}
+
+#contenedorImagenView span{
+	display: block;
+	margin-top: 12px;
+	color: #666;
+}
+
+#contenedorImagenView img{
+	max-height: 235;
+	max-width: 215px;
+	text-align: center;
+}
+
+#datosPropietario{
+	text-align: left;
+	padding-top: 6px;
+	line-height: 10px;
+	padding-bottom: 1px;
+
+}
+#checkin #datosPropietario h2{
+	font-size: 26px;
+	padding-top: 10px;
+}
+
+#checkin #datosPropietario h3{
+	font-size: 22px;
+}
+
+#datosDevice{
+	text-align: left;
+	line-height: 8px;
+}
+#datosDevice p{
+	font-size: 22px;
+	
+}
+
+#checkin #checkinTime, #dispositivoForm #formDisOptions{
+	text-align: center;
+	width: 100%;
+}
+#checkin .checkinTime span{
+	line-height: 8px;
+	display: inline-block;
+	min-width: 200px;
+	height: 80px;
+	vertical-align: top;
+}
+#checkin .checkinTime .chequeo{
+	font-size: 20px;
+	font-weight: bold;
+}
+#checkin .checkinTime .tiempo{
+	font-weight: bold;
+	color: #4F784F;
+	font-size: 22px;
+}
+/* FI
+/* FIN CONTENEDOR ingreso */
+
+/* Contenedor Form Dispositivo */
+
+
+#dispositivoForm #datosPropietario input, #dispositivoForm #datosPropietario select, #dispositivoForm #datosDevice input, #dispositivoForm #datosDevice select{
+	display: block;
+	margin-bottom: 8px;
+
+	width: 310px;
+	padding: 4px;
+	font: 18px 'lucida sans', 'trebuchet MS', 'Tahoma';
+
+	border: 1px solid #C7C7C7;
+	-moz-box-shadow: 0 1px 1px #ddd inset, 0 1px 0 #fff;
+	-webkit-box-shadow: 0 1px 1px #ddd inset, 0 1px 0 #fff;
+	box-shadow: 0 1px 1px #ddd inset, 0 1px 0 #fff;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+}
+
+#dispositivoForm #datosDevice input{
+	margin-left: 100px;
+}
+#dispositivoForm #datosDevice{
+	padding-bottom: 15px;
+}
+
+#dispositivoForm #formDisOptions input{
+
+}
+
+/* Contenedor Form Dispositivo */
+.itemOptions{
+	width: 100%;
+	text-align: center;
+}
+
+.mostrarOptions{
+	display: block;
+}
+
+.ocultarOptions{
+	display: none;
+}
+
+.itemOptions a{
+	margin: 0px 15px 0px 30px;
+	display:inline-block;
+    height:24px;
+    width:24px;
+}
+
+#editItem{
+	background-image: url("edit.png");
+
+}
+
+#removeItem{
+	background-image: url("delete.png");
+}
+
+
+div #itemContent{
+	padding-bottom: 1px;
+	height: 110px;
+}
+
+div #itemContent img{
+	width: 60px;
+	height: 60px;
+	float: left;
+	margin: 0px 8px 8px 0px;
+}
+
+div #itemContent label{
+	color: #777;
+}
+
+.itemClass:hover{
+	border: solid 1px #9E9E9E;
+	background-image: -moz-linear-gradient(#f9f9f9, #f3f3f3);
+	background-image: -webkit-linear-gradient(#f9f9f9, #f3f3f3);
+	background-image: linear-gradient(#f9f9f9, #f3f3f3);
+	background-repeat: repeat-x;
+}
+
+#itemContent, #itemContent p, #itemContent h4, #itemContent label{
+	line-height: 1px;
+}
+
+
+#searchForm #busqueda{
+	width: 210px;
+	height: 28px;
+	padding: 10px 5px;
+	float: left;
+	font: 16px 'lucida sans', 'trebuchet MS', 'Tahoma';
+	border: 1px solid #C7C7C7;
+	-moz-box-shadow: 0 1px 1px #ddd inset, 0 1px 0 #fff;
+	-webkit-box-shadow: 0 1px 1px #ddd inset, 0 1px 0 #fff;
+	box-shadow: 0 1px 1px #ddd inset, 0 1px 0 #fff;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+}
+
+
+.clearLine{
+	clear:both;
+}
+
+footer {
+	margin-top: 30px;
+	text-align: center;
+	color: #444;
+}
+
+footer a{
+	color: #444;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+
+
+#departamentoViewContent h4{
+	font-size: 24px;
+}
+
+#departamentoViewContent, #departamentoViewContent p, #departamentoViewContent h4{
+	line-height: 8px;
+	margin-left: 10px;
+}
+
+#departamentoViewContent #informacion{
+	line-height: 18px;
+}
+
+#departamentoViewContent .itemcontainer{
+	margin-left: 10px;
+	padding-left: 6px;
+}
+
+#departamentoViewContent .infoDepto{
+	padding-top: 8px;
+}
+
+#departamentoViewContent .itemOptions{
+	padding-top: 16px;
+	margin-left: 80px;
+	max-width: 40%;
+}
+
+
+/* fin Checkin view */
+
+/* Logs Entries */
+#logentries{
+		width: 850px;
+		text-align: center;
+		border: solid 2px #C2C2C2; 
+		
+}
+#logsTableContainer
+{
+
+	display: inline-block;
+}
+
+#logsTableContainer table .rowentry td{
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+/*Departamento FORM */
+
+
+
+#fotoContainer{
+	max-height: 210px;
+	max-width: 210px;
+	padding: 5px 15px 15px 5px;
+	float: left;
+	text-align: center;
+	/*border: 1px solid #000;*/
+}
+
+#fotoDepto{
+	max-width: 180px;
+	max-height: 160px;
+}
+
+#dataDeptoForm{
+	display: block;
+}
+#dataDeptoForm label{
+	display: block;
+	padding-top: 10px;
+	margin-bottom: 4px;
+	margin-left: 10px;
+}
+#dataDeptoForm input{
+	margin-left: 10px;
+}
+textarea{
+	margin-top: 8px;
+	margin-bottom: 3px;
+	margin-left: 10px;
+	width: 400px;
+	height: 85px;
+}
+/*Fin - Departamento FORM */
+
+
+/* BOTONES from http://www.cssbuttongenerator.com/ */
+
+.botonOk {
+	-moz-box-shadow:inset 0px 1px 0px 0px #caefab;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #caefab;
+	box-shadow:inset 0px 1px 0px 0px #caefab;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #90eb40), color-stop(1, #5ab510) );
+	background:-moz-linear-gradient( center top, #90eb40 5%, #5ab510 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#90eb40', endColorstr='#5ab510');
+	background-color:#90eb40;
+	-webkit-border-top-left-radius:10px;
+	-moz-border-radius-topleft:10px;
+	border-top-left-radius:10px;
+	-webkit-border-top-right-radius:10px;
+	-moz-border-radius-topright:10px;
+	border-top-right-radius:10px;
+	-webkit-border-bottom-right-radius:10px;
+	-moz-border-radius-bottomright:10px;
+	border-bottom-right-radius:10px;
+	-webkit-border-bottom-left-radius:10px;
+	-moz-border-radius-bottomleft:10px;
+	border-bottom-left-radius:10px;
+	text-indent:0;
+	border:1px solid #268a16;
+	display:inline-block;
+	color:#314222;
+	font-family:Arial;
+	font-size:22px;
+	font-weight:bold;
+	font-style:normal;
+	height:44px;
+	line-height:44px;
+	/*width:127px;*/
+	padding-left: 20px;
+	padding-right: 20px;
+	text-decoration:none;
+	text-align:center;
+	text-shadow:1px 1px 0px #aade7c;
+}
+.botonOk:hover {
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #5ab510), color-stop(1, #90eb40) );
+	background:-moz-linear-gradient( center top, #5ab510 5%, #90eb40 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#5ab510', endColorstr='#90eb40');
+	background-color:#5ab510;
+}.botonOk:active {
+	position:relative;
+	top:1px;
+}
+
+
+.botonCancel {
+	-moz-box-shadow:inset 0px 1px 0px 0px #f5978e;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #f5978e;
+	box-shadow:inset 0px 1px 0px 0px #f5978e;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ffe5ef), color-stop(1, #ebbdb9) );
+	background:-moz-linear-gradient( center top, #ffe5ef 5%, #ebbdb9 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffe5ef', endColorstr='#ebbdb9');
+	background-color:#ffe5ef;
+	-webkit-border-top-left-radius:10px;
+	-moz-border-radius-topleft:10px;
+	border-top-left-radius:10px;
+	-webkit-border-top-right-radius:10px;
+	-moz-border-radius-topright:10px;
+	border-top-right-radius:10px;
+	-webkit-border-bottom-right-radius:10px;
+	-moz-border-radius-bottomright:10px;
+	border-bottom-right-radius:10px;
+	-webkit-border-bottom-left-radius:10px;
+	-moz-border-radius-bottomleft:10px;
+	border-bottom-left-radius:10px;
+	text-indent:0;
+	border:1px solid #7a2f2a;
+	display:inline-block;
+	color:#242323;
+	font-family:Arial;
+	font-size:22px;
+	font-weight:normal;
+	font-style:normal;
+	height:44px;
+	line-height:44px;
+	/*width:127px;*/
+	padding-left: 20px;
+	padding-right: 20px;
+	text-decoration:none;
+	text-align:center;
+	text-shadow:1px 1px 0px #d4b9b9;
+}
+.botonCancel:hover {
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ebbdb9), color-stop(1, #ffe5ef) );
+	background:-moz-linear-gradient( center top, #ebbdb9 5%, #ffe5ef 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ebbdb9', endColorstr='#ffe5ef');
+	background-color:#ebbdb9;
+}.botonCancel:active {
+	position:relative;
+	top:1px;
+}

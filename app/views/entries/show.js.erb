@@ -1,0 +1,4 @@
+$("#mainContent").html("<%= escape_javascript(render(:partial => "entry"))%>");
+setTimeout(function() {
+	$("#notinfo").slideUp();
+}, 2000);
