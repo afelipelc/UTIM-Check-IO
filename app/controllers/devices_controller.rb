@@ -30,38 +30,34 @@ class DevicesController < ApplicationController
   # POST /devices
   # POST /devices.json
   def create
-    #@device = Device.new(params.require(:device).permit(:id, :tipo, :noserie, :marca, :color, :nota))
     @device = Device.new(device_params)
     @device.registro = Time.new
     @device.ultimavez = Time.new
-    #@owner = Owner.new(params.require(:owner).permit(:id, :nombre, :tipo, :clave, :pe))
-    @owner = Owner.new(owner_params)
-    @device.owner = @owner
     
-    # if owner exist, update
-    if @owner.save
-      @device.owner = @owner
-    elsif   @owner.update_attributes(params.require(:owner).permit(:id, :nombre, :tipo, :clave, :pe))
-      @device.owner = @owner
-    end
+    respond_to do |format|  
+      savedOwner = false
+      owner = saveOwner
+      if owner
+        @device.owner = owner
+        savedOwner = true
+      else
+        flash[:error] = "Ya existe un propietario con la clave: " + owner_params[:clave]
+        format.html { render :action => 'new' } 
+      end
 
-    respond_to do |format|
       # if device exist, update
-      if @device.save
-        #format.html { redirect_to @device, :notice => 'El nuevo Dispositivo ha sido registrado correctamente.' }
+      if savedOwner && @device.save
         flash[:notice] = "Se ha registrado el Dispositivo."
-        format.html { render action: 'edit' }
-        format.js   {}
+        format.html { redirect_to @device }
         format.json { render :json => @device, :status => :updated, :location => @device }
-      elsif @device.update_attributes(params[:device])    
+      elsif savedOwner && @device.update_attributes(device_params)    
             flash[:notice] = "El Dispositivo con clave: "+@device.id + " ha sido actualizado"
             #format.html { redirect_to @device }
-            format.html { render action: 'edit' }
-            format.js   {}
+            format.html { redirect_to @device }
             format.json { render :json => @device, :status => :ok }
       else
-          flash[:error] = "Ocurrió un error al guardar los datos del Dispositivo."
-          redirect_to :action => 'new'
+          flash[:error] =  flash[:error] + " \n Ocurrió un error al guardar los datos del Dispositivo."
+          format.html { redirect_to :action => 'new' } 
       end
     end
   end
@@ -84,48 +80,15 @@ class DevicesController < ApplicationController
   end
 
 def search
-    #respond_to do |format|
       if params[:id]
-        #@dispositivos = nil
         if params[:id].is_number?
           redirect_to :action => "edit", :id=> params[:id]
-          #redirect_to :action => "show", :id=> params[:q]
-          # @device = Device.find(params[:id])
-          # if(@device)
-          #   format.html { render :action => "edit"}
-          #   #format.html { redirect_to :action => "show", :id => params[:q] }
-          #   format.js   {}
-          #   format.json { render :json => @device, :status => :ok, :location => @device }
-          # else
-          #   format.html { render action: 'new' }
-          #   format.json { render json: @device.errors, status: :unprocessable_entity }
-          # end
         else
-          #@devices = Device.includes(:owner).where("owners.nombre  LIKE '%"+params[:id]+"%'")
-          # if @devices
           redirect_to :action => "index", :q => params[:id]
-           #format.html { render @devices}
-          #   # format.js   {}
-          #   # format.json { render :json => @devices, :status => :ok, :location => @devices }
-          # else
-          #   format.html { render action: 'index' }
-          #   format.json { render json: @devices.errors, status: :unprocessable_entity }
-          # end
         end
-        
-        # flash[:error] = "No se encontró ninguna coincidencia con: " + params[:q]
-        # format.html { redirect_to :action => 'index' }
-
-      
       else
         render action: 'index'
-        # format.html { render action: 'index' }
-        # format.json { render json: @devices.errors, status: :unprocessable_entity }
       end
-    #end
-    # rescue ActiveRecord::RecordNotFound
-    #         flash[:error] = "No se encontró ningún Dispositivo que contenga: " + params[:q]
-    #         redirect_to :action => 'new'
   end
 
   # def searchItems
@@ -162,6 +125,24 @@ def search
     def owner_params
       params.require(:owner).permit(:id, :nombre, :tipo, :clave, :pe)
     end
+
+    def saveOwner
+      owners = Owner.where(:clave => owner_params[:clave])
+      if owners.blank?
+        owner = Owner.new(owner_params)
+        owner.save
+        return owner
+      else
+        owner = owners.first
+        Owner.update(owner.id, nombre: owner_params[:nombre], pe: owner_params[:pe])
+        owner = Owner.find(owner.id)
+        # @device.owner = owner
+        # savedOwner = true
+        # flash[:notice] = "Ya existe un propietario con la clave: " + owner.id.to_s + ", Se ha asociado con el dispositivo"
+        return owner
+      end
+    end
+
 end
 
 

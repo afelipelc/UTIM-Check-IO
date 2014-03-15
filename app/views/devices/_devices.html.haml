@@ -18,7 +18,11 @@
           %td
                #{device.noserie}
           %td
-               #{device.owner.nombre}
+            - if (device.owner)
+              %p
+                #{device.owner.nombre}
+            - else
+              %p Sin propietario
           %td
                
             - if device.ultimavez
