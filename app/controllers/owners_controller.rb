@@ -7,6 +7,25 @@ class OwnersController < ApplicationController
     @owners = Owner.all
   end
 
+  def find
+    respond_to do |format|
+      if params[:clave]
+        @owner = Owner.where(:clave => params[:clave]).first
+        if @owner
+          format.html { redirect_to @owner }
+          format.json { render json: @owner, status: :ok}
+        else
+          @owner = Owner.new
+          format.html { redirect_to @owner }
+          format.json { render json: @owner, status: :unprocessable_entity}
+        end
+      else
+        @owner = Owner.new
+        format.html { redirect_to @owner }
+        format.json { render json: @owner, status: :unprocessable_entity}
+      end
+    end
+  end
   # GET /owners/1
   # GET /owners/1.json
   def show

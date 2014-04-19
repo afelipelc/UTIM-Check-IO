@@ -5,18 +5,18 @@
     %h4#notinfo.alert_success= flash[:notice]
   - if flash[:error]
     %h4#noterror.alert_error= flash[:error]
-  - if @device.errors
+  - if !@device.errors.blank?
     %ul
-      - @device.errors.full_messages.each do |msg|
+      - @device.errors.messages.each do |msg|
         %li= msg
   = form_for(@device, remote: true, :html => { :class => "dispositivoform"}) do |f|
     #searchDevice
       %span.searchContainer
         = f.hidden_field :id
-        = f.text_field :id, :placeholder=>"Código generado", :readonly => "readonly", :class => "deviceidtext"
+        %input{value: @claveDev, placeholder: "Código generado", readonly: "readonly", class: "deviceidtext", id: "claveGen"}
       %span.addNew
         - if @device.id
-          %a{href: "/dispositivos/new", class: "imageLink"}= image_tag "barcode.png", :title => "Imprimir código de dispositivo"
+          = link_to image_tag("barcode.png", :border => 0), printbarcode_devices_path(:id => @claveDev), :remote => false, :class => "imageLink", :title => "Imprimir código de dispositivo"
         - else
           = image_tag "barcode.png"
     %div

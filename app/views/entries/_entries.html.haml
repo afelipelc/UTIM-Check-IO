@@ -15,7 +15,7 @@
           %th Propietario
           %th Ingreso
           %th Egreso
-      %tbody#logentries.scrollContent{last: "<haml_silent> if @entries </haml_silent><haml_block>#{@entries.to_a.last.id}</haml_block>", style: "height:420px;"}
+      %tbody#logentries.scrollContent{ style: "height:420px;"}
         - @entries.each do |entry|
           %tr.rowentry
             %td
@@ -29,8 +29,12 @@
               - if entry.egreso
                 = entry.egreso.strftime("%d %b %y %H:%M:%S")
 
-        %tr#infinite-scroll
+        %tr#infinite-scroll 
   .totales
+    - if @entries.blank?
+      %input#lastid{type: "hidden", value: "0"}
+    - else
+      %input#lastid{type: "hidden", value: "#{ @entries.to_a.last.id }"}
     %strong
       Total de registros mostrados:
       %span#totallogs= @entries.count

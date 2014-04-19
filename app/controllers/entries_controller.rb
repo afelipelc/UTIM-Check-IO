@@ -4,7 +4,6 @@ class EntriesController < ApplicationController
   # GET /entries
   # GET /entries.json
   def index
-    #@entries = Entry.all
     @entry = Entry.new
     device = Device.new
     @entry.device = device
@@ -67,41 +66,62 @@ class EntriesController < ApplicationController
 
 def checkdevice
     #respond_to do |format|
+    #check for id type: 32371298:1:1
       if params[:id]
-        @idDevice = params[:id]
-        # localizar el id y devolverlo
-        hoy = Time.new
-        #dispositivo con ingreso pero sin egreso
-        @entry = Entry.where(:device_id => params[:id], :ingreso => hoy.beginning_of_day..hoy.end_of_day, :egreso => nil).first
 
-        if @entry
-            @entry.egreso = Time.new
-            if(@entry.update_attribute(:egreso, Time.new))
-              device = @entry.device
-              device.ultimavez = Time.new
-              device.update_attribute(:ultimavez, Time.new)
-              flash[:notice] = "Se ha Registrado el egreso."
-              redirect_to @entry
-            else
-              flash[:error] = "Ocurrió un error al registrar el egreso del dispositivo."
+        if(params[:id].scan(/:/).length !=2)
+            flash[:error] = "Pase el código de barras del dispositivo sobre el lector."
+            redirect_to :action => 'index'
+        else
+          datosDev = params[:id].split(":")
+          hoy = Time.new
+          #dispositivo con ingreso pero sin egreso
+          #@entry = Entry.where(:device_id => params[:id], :ingreso => hoy.beginning_of_day..hoy.end_of_day, :egreso => nil).first
+          @entry = Entry.where(:device_id => datosDev[1].to_i, :ingreso => hoy.beginning_of_day..hoy.end_of_day, :egreso => nil).first
+
+          if @entry
+            puts @entry.device.owner_id
+            puts datosDev[2]
+            if(@entry.device.owner_id != datosDev[2].to_i || @entry.device.owner.clave != datosDev[0])
+              flash[:error] = "El dispositivo no pertenece al propietario. \nPase el código de barras del dispositivo sobre el lector."
               redirect_to :action => 'index'
+              return
             end
 
-        else
-          #registrar el ingreso
-          device = Device.find(params[:id])
-          if device
-              @entry = Entry.new
-              @entry.ingreso = Time.new
-              @entry.device = device
-              if(@entry.save)
+              @entry.egreso = Time.new
+              if(@entry.update_attribute(:egreso, Time.new))
+                device = @entry.device
+                device.ultimavez = Time.new
                 device.update_attribute(:ultimavez, Time.new)
-                flash[:notice] = "Se ha Registrado el ingreso."
+                flash[:notice] = "Se ha Registrado el egreso."
                 redirect_to @entry
               else
-                flash[:error] = "Ocurrió un error al intentar registrar el Ingreso."
+                flash[:error] = "Ocurrió un error al registrar el egreso del dispositivo."
                 redirect_to :action => 'index'
-              end  
+              end
+
+          else
+            #registrar el ingreso
+            #device = Device.find(params[:id])
+            device = Device.validarToken(datosDev[0], datosDev[1].to_i, datosDev[2].to_i) #Device.find(datosDev[1].to_i)
+            if device
+                if(device.owner_id != datosDev[2].to_i || device.owner.clave != datosDev[0])
+                  flash[:error] = "El dispositivo no pertenece al propietario. \nPase el código de barras del dispositivo sobre el lector."
+                  redirect_to :action => 'index'
+                  return
+                end
+                @entry = Entry.new
+                @entry.ingreso = Time.new
+                @entry.device = device
+                if(@entry.save)
+                  device.update_attribute(:ultimavez, Time.new)
+                  flash[:notice] = "Se ha Registrado el ingreso."
+                  redirect_to @entry
+                else
+                  flash[:error] = "Ocurrió un error al intentar registrar el Ingreso."
+                  redirect_to :action => 'index'
+                end  
+            end
           end
         end
       else
@@ -116,14 +136,15 @@ def checkdevice
   end
 
 def logs
+  hoy = Time.new
   if params[:id]
-    @entries = Entry.where(:device_id => params[:id])
-    if @entries.blank?
-       @entries = Entry.all
+     @entries = Entry.where(:device_id => params[:id])
+     if @entries.blank?
+       @entries = Entry.where(:ingreso => hoy.beginning_of_day..hoy.end_of_day)
        flash[:error] = "No se encontraron registros de este Dispositivo " + params[:id]
-    end
+     end
   else
-    @entries = Entry.all
+    @entries = Entry.where(:ingreso => hoy.beginning_of_day..hoy.end_of_day)
   end
 end
 

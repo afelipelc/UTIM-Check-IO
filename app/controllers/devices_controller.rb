@@ -15,6 +15,7 @@ class DevicesController < ApplicationController
   # GET /devices/1.json
   def show
     # @device = Device.find(params[:id])
+    #@claveDev = @device.owner.clave + ":" + @device.id.to_s + ":" + @device.owner_id.to_s
   end
 
   # GET /devices/new
@@ -25,6 +26,7 @@ class DevicesController < ApplicationController
 
   # GET /devices/1/edit
   def edit
+    #@claveDev = @device.owner.clave + ":" + @device.id.to_s + ":" + @device.owner_id.to_s
   end
 
   # POST /devices
@@ -35,29 +37,35 @@ class DevicesController < ApplicationController
     @device.ultimavez = Time.new
     
     respond_to do |format|  
-      savedOwner = false
-      owner = saveOwner
-      if owner
-        @device.owner = owner
-        savedOwner = true
-      else
-        flash[:error] = "Ya existe un propietario con la clave: " + owner_params[:clave]
-        format.html { render :action => 'new' } 
-      end
+      savedOwner = true #false
+      @device.owner = saveOwner
+      # if owner
+      #   @device.owner = owner
+      #   savedOwner = true
+      # else
+      #   flash[:error] = "Ya existe un propietario con la clave: " + owner_params[:clave]
+      #   format.html { render :action => 'new' } 
+      # end
 
-      # if device exist, update
-      if savedOwner && @device.save
-        flash[:notice] = "Se ha registrado el Dispositivo."
-        format.html { redirect_to @device }
-        format.json { render :json => @device, :status => :updated, :location => @device }
-      elsif savedOwner && @device.update_attributes(device_params)    
-            flash[:notice] = "El Dispositivo con clave: "+@device.id + " ha sido actualizado"
-            #format.html { redirect_to @device }
-            format.html { redirect_to @device }
-            format.json { render :json => @device, :status => :ok }
+      if(@device.valid?)
+        # if device exist, update
+        if @device.save #savedOwner && 
+          flash[:notice] = "Se ha registrado el Dispositivo."
+          format.html { redirect_to @device }
+          format.json { render :json => @device, :status => :updated, :location => @device }
+        elsif @device.update_attributes(device_params) #savedOwner && 
+              flash[:notice] = "El Dispositivo con clave: "+@device.id + " ha sido actualizado"
+              #format.html { redirect_to @device }
+              format.html { redirect_to @device }
+              format.json { render :json => @device, :status => :ok }
+        else
+            flash[:error] =  flash[:error] + " \n Ocurrió un error al guardar los datos del Dispositivo."
+            format.html { redirect_to :action => 'new' } 
+        end
       else
-          flash[:error] =  flash[:error] + " \n Ocurrió un error al guardar los datos del Dispositivo."
-          format.html { redirect_to :action => 'new' } 
+        flash[:notice] = "No se pueden guardar los datos."
+        format.html { redirect_to action: "edit" }
+        format.json { render :json => @device, :status => :unprocessable_entity, :location => @device }
       end
     end
   end
@@ -73,6 +81,7 @@ class DevicesController < ApplicationController
         format.html { redirect_to action: "edit" }
         format.json { head :no_content }
       else
+        flash[:error] = @device.errors.messages.to_s
         format.html { redirect_to action: 'index' }
         format.json { render json: @device.errors, status: :unprocessable_entity }
       end
@@ -83,6 +92,16 @@ def search
       if params[:id]
         if params[:id].is_number?
           redirect_to :action => "edit", :id=> params[:id]
+        elsif params[:id].scan(/:/).length ==2
+          datosDev = params[:id].split(":")
+          #redirect_to :action => "edit", :id=> datosDev[1]
+          @device = Device.validarToken(datosDev[0], datosDev[1].to_i, datosDev[2].to_i)
+          if(@device)
+            redirect_to @device
+          else
+            flash[:error] = "No se localizó el dispositivo con clave: " + params[:id]
+            redirect_to action: 'index'
+          end
         else
           redirect_to :action => "index", :q => params[:id]
         end
@@ -90,6 +109,15 @@ def search
         render action: 'index'
       end
   end
+
+def printbarcode
+  if params[:id]
+  puts "Generando codigo de barra"
+else
+  flash[:error] = "Vuelva a los datos del dispositivo y presione Imprimir código."
+  redirect_to :action => "index"
+end
+end
 
   # def searchItems
   #   @devices = Device.includes(:owner).where("owners.nombre  LIKE '%"+params[:q]+"%'")
@@ -113,6 +141,7 @@ def search
     # Use callbacks to share common setup or constraints between actions.
     def set_device
       @device = Device.find(params[:id])
+      @claveDev = @device.owner.clave + ":" + @device.id.to_s + ":" + @device.owner_id.to_s
       rescue ActiveRecord::RecordNotFound
         flash[:error] = "No se encontró ningún Dispositivo que contenga: " + params[:id] + ". Regístrelo aquí"
         redirect_to :action => 'new'
@@ -130,15 +159,17 @@ def search
       owners = Owner.where(:clave => owner_params[:clave])
       if owners.blank?
         owner = Owner.new(owner_params)
-        owner.save
+        #owner.save
         return owner
       else
         owner = owners.first
-        Owner.update(owner.id, nombre: owner_params[:nombre], pe: owner_params[:pe])
-        owner = Owner.find(owner.id)
+        #Owner.update(owner.id, nombre: owner_params[:nombre], pe: owner_params[:pe])
+        owner.nombre = owner_params[:nombre]
+        owner.pe = owner_params[:pe]
+        #owner = Owner.find(owner.id)
         # @device.owner = owner
         # savedOwner = true
-        # flash[:notice] = "Ya existe un propietario con la clave: " + owner.id.to_s + ", Se ha asociado con el dispositivo"
+        flash[:notice] = "Ya existe un propietario con la clave: " + owner.id.to_s + ", Se ha asociado con el dispositivo"
         return owner
       end
     end

@@ -1,4 +1,10 @@
 #dispositivoscontainer
+  - if flash[:notif]
+    %h4#notif.alert_info= flash[:notif]
+  - if flash[:notice]
+    %h4#notinfo.alert_success= flash[:notice]
+  - if flash[:error]
+    %h4#noterror.alert_error= flash[:error]
   %table.tablesorter.scrollTable{cellspacing: "0"}
     %thead.fixedHeader
       %tr
@@ -30,6 +36,6 @@
           %td
                
             %span.optionsrow
-              = link_to image_tag("edit.png", :border => 0, :method => :edit, :remote => true, :class=>"editarlink"),device
-              = link_to image_tag("lista.png", :border => 0, :method => :logdevice, :remote => true, :class=>"loglink"), device
+              = link_to image_tag("edit.png", :border => 0), edit_device_path(device), :remote => true
+              = link_to image_tag("lista.png", :border => 0), logs_entries_path(:id => device.id)
       %tr#infinite-scroll

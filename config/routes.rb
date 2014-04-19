@@ -13,10 +13,17 @@ Checkin::Application.routes.draw do
   resources :devices do
     collection do
       post :search
+      post :printbarcode
+      get :printbarcode
     end
   end
 
-  resources :owners
+  resources :owners do
+    collection do
+      post :find
+      get :find
+    end
+  end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -1,4 +1,16 @@
 $("#mainContent").html("<%= escape_javascript(render(:partial => "form"))%>");
+
+$('#owner_clave').on("change",function() {
+  if($(this).val() != ""){
+	  $.getJSON("http://0.0.0.0:3000/owners/find.json?clave=" + $(this).val(),
+	    function(data) {
+	      $("#owner_nombre").val(data.nombre);
+	      $("#owner_pe").val(data.pe);
+	    });
+	}
+});
+
 setTimeout(function() {
 	$("#notinfo").slideUp();
 }, 2000);
+
