@@ -52,7 +52,7 @@ header .logo{
 header .title
 {
 	display: inline-block;
-	width: 60%;
+	width: 55%;
 	position: relative;
 	margin-top: 25px;
 	text-align: center;
@@ -77,6 +77,19 @@ header #formContainer {
 	padding-top: 15px;
 	padding-bottom: 0px;
 	position: absolute;
+}
+header #formContainer #searchForm #id{
+	width: 95%;
+	padding: 2px;
+	font: 18px 'lucida sans', 'trebuchet MS', 'Tahoma';
+	color:#41783E;
+	border: 1px solid #55BA50;
+	-moz-box-shadow: 0 1px 1px #ddd inset, 0 1px 0 #fff;
+	-webkit-box-shadow: 0 1px 1px #ddd inset, 0 1px 0 #fff;
+	box-shadow: 0 1px 1px #ddd inset, 0 1px 0 #fff;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
 }
 
 header #formContainer .opciones{
@@ -403,22 +416,29 @@ footer a{
 
 /* Logs Entries */
 #logentries{
-		width: 850px;
+		width: 100%;
 		text-align: center;
-		border: solid 2px #C2C2C2; 
+		/*border: solid 2px #C2C2C2; */
 		
 }
 #logsTableContainer
 {
-
+	text-align: left;
 	display: inline-block;
 }
-
-#logsTableContainer table .rowentry td{
+#logsTableContainer .fixedHeader{
 	padding-left: 10px;
-	padding-right: 10px;
+}
+#logsTableContainer table .rowentry{
+}
+#logsTableContainer table .rowentry td{
+	padding: 5px 15px 5px 0px;
+	text-align: left;
 }
 
+.totales{
+	text-align: left;
+}
 /*Departamento FORM */
 
 

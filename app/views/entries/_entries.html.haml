@@ -27,14 +27,15 @@
                 = entry.ingreso.strftime("%d %b %y %H:%M:%S")
             %td
               - if entry.egreso
-                = entry.egreso.strftime("%d %b %y %H:%M:%S")
-
-        %tr#infinite-scroll 
-  .totales
-    - if @entries.blank?
-      %input#lastid{type: "hidden", value: "0"}
-    - else
-      %input#lastid{type: "hidden", value: "#{ @entries.to_a.last.id }"}
-    %strong
-      Total de registros mostrados:
-      %span#totallogs= @entries.count
+                = entry.egreso.strftime("%d %b %y %H:%M:%S")  
+        %tr#infinite-scroll
+      %tfoot
+        %tr
+          %td{colspan: 4}
+            - if @entries.blank?
+              %input#lastid{type: "hidden", value: "0"}
+            - else
+              %input#lastid{type: "hidden", value: "#{ @entries.to_a.last.id }"}
+            %strong
+              Total de registros mostrados:
+              %span#totallogs= @entries.count

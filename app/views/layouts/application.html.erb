@@ -10,7 +10,7 @@
 	<body>
 		<header>
 			<span class="logo">
-				<%= link_to image_tag("logo.png"), entries_path %>
+				<%= link_to image_tag("logo.png"), entries_path, :remote => true %>
 
 			</span>
 			<span class="title">
@@ -22,8 +22,9 @@
          <% end %>
 
 				<div class="opciones">
-					<%= link_to image_tag("today.png"), logs_entries_path, :remote => "true", :class => "imageLink", :title => "Ver registros de ingresos/egresos." %>
-					  <%= link_to image_tag("view_list.png"), devices_path, :remote => "true", :class => "imageLink", :title => "Ver dispositivos." %>
+					<%= link_to image_tag("scanner48.png"), entries_path, :remote => true, :class => "imageLink", :title => "Registrar ingreso/egreso"%>
+					<%= link_to image_tag("today.png"), logs_entries_path, :remote => "true", :class => "imageLink", :title => "Ver registros de ingresos/egresos" %>
+					  <%= link_to image_tag("view_list.png"), devices_path, :remote => "true", :class => "imageLink", :title => "Ver dispositivos" %>
 						<%= link_to image_tag("new.png"), new_device_path, :remote => "true", :class => "imageLink", :title => "Registrar dispositivo" %>
 					<a href="#" id="reportOpt" title="Reportar fallo de la aplicación" class="imageLink"><%= image_tag "send.png" %></a>
 				</div>
@@ -35,7 +36,7 @@
 		</article>
 		<div class="clearLine"></div>
 		<footer>
-			<p>Por <a href="mailto:afelipelc@gmail.com">AFelipe</a>  |  2014</p>
+			<p>Por <a href="http://www.utim.edu.mx">UTIM :: TIC</a>  |  2014</p>
 		</footer>
 	</body>
 </html>

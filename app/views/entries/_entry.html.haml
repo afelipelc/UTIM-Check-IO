@@ -8,7 +8,7 @@
   #searchDevice
     %span.searchContainer
       = form_tag "/entries/checkdevice", :remote => "true", :id=>"checkdevform",:method => 'post', :class=>"searchheader"  do
-        = text_field_tag :id, params[:id], :autofocus=>"autofocus", :placeholder => "Códido de dispositivo", :value => ""
+        = text_field_tag :id, params[:id], :autofocus=>"autofocus", :placeholder => "Código de dispositivo", :value => ""
     %span.addNew
       = link_to image_tag("new.png"), new_device_path, :remote => "true", :title => "Registrar nuevo dispositivo", :class => "imageLink"
   %div
