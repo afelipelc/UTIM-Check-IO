@@ -1,1 +1,10 @@
 $("#mainContent").html("<%= escape_javascript(render(:partial => "entries"))%>");
+$('.datepicker').datepicker({ dateFormat: 'dd/mm/yy' });
+$('.datepicker').on("change", function(){
+	$("#logsfechaform").submit();
+});
+
+$('#logentriestable').dataTable({
+	bJQueryUI: true,
+	sPaginationType: "full_numbers"
+});

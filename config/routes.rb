@@ -1,5 +1,9 @@
 Checkin::Application.routes.draw do
 
+  get "information/index"
+  get "information/about"
+  get "information/reportarfallo"
+  post "information/procesarfallo"
   #get "devices/show/:id" => "devices#show"
   #get "devices/search/:id" => "devices#search"
   resources :entries do
@@ -13,6 +17,7 @@ Checkin::Application.routes.draw do
   resources :devices do
     collection do
       post :search
+      get :search
       post :printbarcode
       get :printbarcode
     end

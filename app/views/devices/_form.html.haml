@@ -13,10 +13,10 @@
     #searchDevice
       %span.searchContainer
         = f.hidden_field :id
-        %input{value: @claveDev, placeholder: "Código generado", readonly: "readonly", class: "deviceidtext", id: "claveGen"}
+        %input{value: @device.devicetoken, placeholder: "Código generado", readonly: "readonly", class: "deviceidtext", id: "claveGen"}
       %span.addNew
         - if @device.id
-          = link_to image_tag("barcode.png", :border => 0), printbarcode_devices_path(:id => @claveDev), :remote => false, :class => "imageLink", :title => "Imprimir código de dispositivo"
+          = link_to image_tag("barcode.png", :border => 0), printbarcode_devices_path(:id => @device.devicetoken), :remote => false, :class => "imageLink", :title => "Imprimir código de dispositivo"
         - else
           = image_tag "barcode.png"
     %div
@@ -40,4 +40,4 @@
       .formDisOptions
         = f.submit "Guardar", :class=>"botonOk"
         = succeed "" do
-          %input#cancelsavedisp.botonCancel.modal-link{rel: "#warning", type: "button", value: "Cancelar"}
+          = link_to "Cancelar", :back, :id=>"#cancelsavedisp", :class => "botonCancel modal-link"

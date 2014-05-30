@@ -11,6 +11,25 @@
 // about supported directives.
 //
 //= require jquery
+//= require jquery.ui.datepicker
+//= require dataTables/jquery.dataTables
 //= require jquery_ujs
 //= require turbolinks
-//= require_tree .
+//= require_tree
+
+//on reload with turbolinks
+$(document).on('page:load', function() {
+    if ($("#checkdevform").length > 0)
+    {
+    	$("#checkdevform #id").focus();
+    }
+});
+
+$(document).keyup(function(event) {
+	//$("#searchForm #id").on("keypress", function(event){
+	if ( event.which == 27 && $("#checkdevform").length > 0) {
+	     event.preventDefault();
+	     $("#searchForm #id").val("");
+	     $("#checkdevform #id").focus();
+	  }
+});

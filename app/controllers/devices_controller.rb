@@ -4,11 +4,15 @@ class DevicesController < ApplicationController
   # GET /devices
   # GET /devices.json
   def index
-      if params[:q]
-        @devices = Device.includes(:owner).where("owners.nombre  LIKE '%"+params[:q]+"%'")
-      else
-        @devices = Device.all
+      # if params[:q]
+      #   @devices = Device.includes(:owner).where("owners.nombre  LIKE '%"+params[:q]+"%'")
+      # else
+      respond_to do |format|
+        #@devices = Device.all
+        format.html
+        format.json { render json: DevicesDatatable.new(view_context) }
       end
+      # end
   end
 
   # GET /devices/1
@@ -93,9 +97,9 @@ def search
         if params[:id].is_number?
           redirect_to :action => "edit", :id=> params[:id]
         elsif params[:id].scan(/:/).length ==2
-          datosDev = params[:id].split(":")
+          #datosDev = params[:id].split(":")
           #redirect_to :action => "edit", :id=> datosDev[1]
-          @device = Device.validarToken(datosDev[0], datosDev[1].to_i, datosDev[2].to_i)
+          @device = Device.validarToken(params[:id].split(":"))#datosDev[0], datosDev[1].to_i, datosDev[2].to_i)
           if(@device)
             redirect_to @device
           else
@@ -103,7 +107,8 @@ def search
             redirect_to action: 'index'
           end
         else
-          redirect_to :action => "index", :q => params[:id]
+          #redirect_to :action => "index", :q => params[:id]
+          render :action => "index", :sSearch => params[:id]
         end
       else
         render action: 'index'
@@ -141,7 +146,7 @@ end
     # Use callbacks to share common setup or constraints between actions.
     def set_device
       @device = Device.find(params[:id])
-      @claveDev = @device.owner.clave + ":" + @device.id.to_s + ":" + @device.owner_id.to_s
+      #@claveDev = @device.owner.clave + ":" + @device.id.to_s + ":" + @device.owner_id.to_s
       rescue ActiveRecord::RecordNotFound
         flash[:error] = "No se encontró ningún Dispositivo que contenga: " + params[:id] + ". Regístrelo aquí"
         redirect_to :action => 'new'
