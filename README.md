@@ -6,13 +6,15 @@ Proyecto que tiene como finalidad llevar la bitácora de ingreso/egreso de los d
 Su desarrollo está implementado en Rails v4.1.0
 
 Actualmente realiza:
-	* Registrar/Editar/Buscar Dispositivos y propietario
+	* Registrar/Editar/Buscar Dispositivos y propietarios
+	** Al registrar dispositivo licaliza propietario registrado, sino entonces crea uno nuevo
 	* Registro de Ingreso y Egreso del dispositivo
 	* Visulizar Bitácora de ingresos y egresos
+	** Filtrado de registros por día a través del datepicker
 	* Filtrar registros por dispositivo
+	* Imprimir código de barra con el ID del dispositivo
+	* Toma y guardado de fotografía del propietario
 
 Por realizar
-	* Al registrar un nuevo dispositivo, verificar si el propietario existe entonces asociarlo al nuevo dispositivo.
-	* Filtrar la bitácora de ingresos-egresos por fechas
-	* Ver dispositivos por usuario
-	* Generar el código de barras, lo ideal sería generar una etiqueta con código QR
+	* Ver dispositivos por propietario
+	* Revisar y corregis posibles errores lógicos
