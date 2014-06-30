@@ -17,7 +17,7 @@
 				<h1>Check - in</h1>
 			</span>
 			<span id="formContainer">
-			<%= form_tag search_devices_path, :id=>"searchForm", :remote=>"true", :method => 'post' do %>
+			<%= form_tag search_devices_path, :id=>"searchForm", :method => 'post' do %>
          <%= text_field_tag :id, params[:id], :placeholder => "Buscar...", :value => "" %>
          <% end %>
 

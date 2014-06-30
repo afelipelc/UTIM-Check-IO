@@ -5,3 +5,10 @@ $("#mainContent").html("<%= escape_javascript(render(:partial => "devices"))%>")
 // 	bServerSide: true,
 //     sAjaxSource: $('#devicestable').data('source')
 // });
+$(document).ready(function(){
+	alert("<%= flash[:search] %>");
+});
+
+$(document).on('page:load', function() {
+	alert("<%= flash[:search] %>");
+});

@@ -1,0 +1,27 @@
+/*need Disable Print Preview In Chrome*/
+@page 
+{
+  size: auto;   /* auto is the current printer page size */
+  margin: 0mm;  /* this affects the margin in the printer settings */
+}
+body{
+  text-align: left;
+  background-color: #fff;
+}
+#maincontent{
+  text-align: center;
+  display: inline-block;
+  width: 290px;
+  height: 85px;
+  /*min-width: auto;*/
+  padding: 10px 10px 10px 10px;
+  font: 18px 'lucida sans', 'trebuchet MS', 'Tahoma';
+  border: 1px solid #000;
+  border-radius: 4px; 
+}
+h3{
+  text-align: center;	
+  font-size: 16px;
+  padding: 0px;
+  margin: 0px;
+}

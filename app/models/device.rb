@@ -4,7 +4,7 @@ class Device < ActiveRecord::Base
 
 	def self.validarToken(params)#ownerClave, idDevice, idOwner)
     if params#ownerClave && idOwner && idDevice
-      joins(:owner).where('owner_id = ? and devices.id = ? and clave = ?', params[1],params[2],params[0]).first #idOwner, idDevice).first
+      joins(:owner).where('owner_id = ? and devices.id = ? and clave = ?', params[2],params[1],params[0]).first #idOwner, idDevice).first
 
 #puts "Datos Dispos>>>>" + self.owner_id
 
@@ -17,6 +17,10 @@ class Device < ActiveRecord::Base
   end
 
   def devicetoken
+    if !id.nil?
     owner.clave+":"+id.to_s+":"+owner_id.to_s
+    else
+      nil
+    end
   end
 end

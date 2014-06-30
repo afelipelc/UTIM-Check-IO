@@ -23,6 +23,17 @@ $(document).on('page:load', function() {
     {
     	$("#checkdevform #id").focus();
     }
+
+    $('a[data-popup]').on('click', function(e) { 
+	    e.preventDefault();
+	    openPopup(this);
+	});
+	$('.takepicture').on('click', function(e){
+		//get the Token autentication value by meta_tag
+		var token = $('meta[name=csrf-token]').attr("content");
+		window.open( $(this).attr('href') + "&token=" + token, "Tomar foto", "height=600, width=900" );
+		e.preventDefault();
+	});
 });
 
 $(document).keyup(function(event) {
@@ -33,3 +44,44 @@ $(document).keyup(function(event) {
 	     $("#checkdevform #id").focus();
 	  }
 });
+
+$(document).ready(function(){
+	$('a[data-popup]').on('click', function(e) { 
+	    e.preventDefault();
+	    openPopup(this);
+	});
+	$('.takepicture').on('click', function(e){
+		//get the Token autentication value by meta_tag
+		var token = $('meta[name=csrf-token]').attr("content");
+		window.open( $(this).attr('href') + "&token=" + token, "Tomar foto", "height=600, width=900" );
+		e.preventDefault();
+	});
+
+	$('#owner_clave').on("change",function() {
+	dataOwner(this);
+	});
+});
+
+function openPopup(object){
+	window.open( $(object).attr('href'), "Imprimir etiqueta", "height=200, width=400" );
+	e.preventDefault(); 
+}
+
+function dataOwner(object){
+	if($(object).val() != ""){
+	$.ajax({
+	  dataType: "json",
+	  url: "http://localhost:3000/owners/find.json?clave=" + $(object).val()})
+	.done(function(data) {
+	      $("#owner_nombre").val(data.nombre);
+	      $("#owner_pe").val(data.pe);
+	      $("#owner_id").val(data.id);
+	    }).fail(function(){
+	    	$("#owner_nombre").val("");
+			$("#owner_pe").val("");
+			//$("#owner_id").val("");
+			$('#owner_clave').focus();
+	    });
+	}
+}
+

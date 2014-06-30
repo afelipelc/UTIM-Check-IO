@@ -24,10 +24,7 @@
           = image_tag "barcode.png"
     %div
       #contenedorImagenView
-        - if !@device.owner.nil?
-          = link_to image_tag("user.png"), takepicture_devices_path(:id =>@device.devicetoken), :remote => false, :class => " takepicture", :title => "Tomar foto del propietario"
-        - else
-          = image_tag "user.png"
+        = image_tag "user.png"
         %br/
         %span Propietario
       #datosPropietario

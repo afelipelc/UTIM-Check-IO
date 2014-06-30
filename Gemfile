@@ -37,6 +37,10 @@ group :doc do
   gem 'sdoc', require: false
 end
 
+# Barby para generar el codigo de barra
+gem 'barby', '~> 0.6.1'
+gem 'chunky_png' # auxiliar para la imagen del barcode
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
 

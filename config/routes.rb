@@ -20,6 +20,10 @@ Checkin::Application.routes.draw do
       get :search
       post :printbarcode
       get :printbarcode
+      post :takepicture
+      get :takepicture
+      post :savepicture
+      get :savepicture
     end
   end
 

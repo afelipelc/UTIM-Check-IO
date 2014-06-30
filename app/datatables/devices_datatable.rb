@@ -20,13 +20,13 @@ private
   def data
     devices.map do |device|
       [
-        link_to(device.devicetoken, @view.search_devices_path(:id => device.devicetoken),:remote=> "true"),
+        link_to(device.devicetoken, @view.search_devices_path(:id => device.devicetoken)),
         device.tipo,
         device.noserie,
         device.owner.nombre,
-        device.ultimavez,
-        link_to("Editar", @view.search_devices_path(:id => device.devicetoken),:remote=> "true") + "  " +
-        link_to("Registros", @view.logs_entries_path(:id => device.id))
+        device.ultimavez.strftime("%d %b %y %H:%M:%S"),
+        link_to("Editar", @view.search_devices_path(:id => device.devicetoken)) + "  " +
+        link_to("Registros", @view.logs_entries_path(:id => device.id),:remote=> "true")
         #link_to(device.id)
       ]
     end
@@ -39,6 +39,7 @@ private
   def fetch_devices
     devices = Device.order("#{sort_column} #{sort_direction}")
     devices = devices.page(page).per_page(per_page)
+    
     if params[:sSearch].present?
       #devices = devices.where("noserie like :search or marca like :search", search: "%#{params[:sSearch]}%")
       devices = devices.joins(:owner).where("noserie like :search or marca like :search or nombre like :search", search: "%#{params[:sSearch]}%")

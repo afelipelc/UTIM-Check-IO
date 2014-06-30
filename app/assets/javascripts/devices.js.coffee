@@ -9,6 +9,7 @@ jQuery ->
       bProcessing: true
       bServerSide: true
       sAjaxSource: $('#devicestable').data('source')
+
 #When page is loaded by turbolink
 $(document).on "page:load", ->
   if $("#devicestable").length > 0

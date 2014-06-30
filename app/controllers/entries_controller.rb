@@ -143,17 +143,18 @@ def checkdevice
 def logs
   if params[:date]
     fecha = Date.strptime(params[:date], "%d/%m/%Y")
-    @entries = Entry.where(:ingreso => fecha.beginning_of_day..fecha.end_of_day)
+    @entries = Entry.where(:ingreso => fecha.beginning_of_day..fecha.end_of_day).order(ingreso: :desc)
   else  
     hoy = Time.new
     if params[:id]
-       @entries = Entry.where(:device_id => params[:id])
+       @entries = Entry.where(:device_id => params[:id]).order(ingreso: :desc)
        if @entries.blank?
          @entries = Entry.where(:ingreso => hoy.beginning_of_day..hoy.end_of_day)
          flash[:error] = "No se encontraron registros de este Dispositivo " + params[:id]
        end
     else
-      @entries = Entry.where(:ingreso => hoy.beginning_of_day..hoy.end_of_day)
+      @entries = Entry.where(:ingreso => hoy.beginning_of_day..hoy.end_of_day).order(ingreso: :desc)
+      params[:date] = Time.new.strftime("%d/%m/%Y")
     end
   end
 end

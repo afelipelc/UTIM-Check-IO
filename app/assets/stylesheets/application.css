@@ -61,7 +61,7 @@ header .title
 	text-align: center;
 }
 
-header .title h1{
+header .title h1, .title{
 	font-size: 24px;
 	color: #4D4D4D;
 }
@@ -121,7 +121,7 @@ article{
 	width: 90%;
 	/*border: 1px solid #ccc;*/
 	display: inline-block;
-	padding-top: 30px;
+	padding-top: 8x;
 	text-align: center;
 }
 /* General Article */
@@ -393,12 +393,18 @@ footer a{
 		/*border: solid 2px #C2C2C2; */
 		
 }
-
+div.logsfechacontainer{
+	margin: 16px;
+}
+div.logsfechacontainer span.title{
+	font: 20px 'lucida sans', 'trebuchet MS', 'Tahoma';
+	font-weight: bold;
+}
 #logsfecha{
-	width: 100px;
-	height: 18px;
-	padding: 2px;
-	font: 16px 'lucida sans', 'trebuchet MS', 'Tahoma';
+	width: 130px;
+	height: 26px;
+	padding: 3px;
+	font: 20px 'lucida sans', 'trebuchet MS', 'Tahoma';
 	color: #AD2E2B;
 	border: 1px solid #55BA50;
 	-moz-box-shadow: 0 1px 1px #ddd inset, 0 1px 0 #fff;
