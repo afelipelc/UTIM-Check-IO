@@ -1,0 +1,41 @@
+#dispositivoscontainer
+  - if flash[:notif]
+    %h4#notif.alert_info= flash[:notif]
+  - if flash[:notice]
+    %h4#notinfo.alert_success= flash[:notice]
+  - if flash[:error]
+    %h4#noterror.alert_error= flash[:error]
+  %h3 Dispositivos registrados
+  %table#devicestable.display{"data-source" => devices_url(format: "json")}
+    %thead
+      %tr
+        %th Clave
+        %th Tipo
+        %th No. Serie
+        %th Propietario
+        %th Última actividad
+        %th Opciones
+    %tbody
+      - @devices.each do |device|
+        %tr
+          %td
+               #{device.id}
+          %td
+               #{device.tipo}
+          %td
+               #{device.noserie}
+          %td
+            - if (device.owner)
+              %p
+                #{device.owner.nombre}
+            - else
+              %p Sin propietario
+          %td
+               
+            - if device.ultimavez
+              = device.ultimavez.strftime("%d %b %y %H:%M:%S")
+          %td
+               
+            %span.optionsrow
+              = link_to image_tag("edit.png", :border => 0), edit_device_path(device), :remote => "true", :title=>"Modificar datos"
+              = link_to image_tag("lista.png", :border => 0), logs_entries_path(:id => device.id), :remote =>"true", :title => "Ver registros de ingresos"

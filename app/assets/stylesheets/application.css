@@ -9,7 +9,11 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
- *= require_tree .
+ *= require jquery.ui.datepicker
+ *= require jquery.ui.theme
+ *= require magnific-popup
+ *= require dataTables/jquery.dataTables
+ *= require_tree
  */
 body{
 	/*background: #F2F2F2;*/
@@ -58,7 +62,7 @@ header .title
 	text-align: center;
 }
 
-header .title h1{
+header .title h1, .title{
 	font-size: 24px;
 	color: #4D4D4D;
 }
@@ -118,7 +122,7 @@ article{
 	width: 90%;
 	/*border: 1px solid #ccc;*/
 	display: inline-block;
-	padding-top: 30px;
+	padding-top: 8x;
 	text-align: center;
 }
 /* General Article */
@@ -189,7 +193,8 @@ margin-right: 12px;
 }
 #contenedorImagenView{
 	max-height: 250px;
-	width: 220px;
+	min-width: 200px;
+	max-width: 220px;
 	padding: 15px;
 	float: left;
 	margin-left: 30px;
@@ -259,8 +264,6 @@ margin-right: 12px;
 /* FIN CONTENEDOR ingreso */
 
 /* Contenedor Form Dispositivo */
-
-
 #dispositivoForm #datosPropietario input, #dispositivoForm #datosPropietario select, #dispositivoForm #datosDevice input, #dispositivoForm #datosDevice select{
 	display: block;
 	margin-bottom: 8px;
@@ -277,6 +280,7 @@ margin-right: 12px;
 	-webkit-border-radius: 4px;
 	border-radius: 4px;
 }
+
 
 #dispositivoForm #datosDevice input{
 	margin-left: 100px;
@@ -382,49 +386,42 @@ footer a{
 }
 
 
-
-#departamentoViewContent h4{
-	font-size: 24px;
-}
-
-#departamentoViewContent, #departamentoViewContent p, #departamentoViewContent h4{
-	line-height: 8px;
-	margin-left: 10px;
-}
-
-#departamentoViewContent #informacion{
-	line-height: 18px;
-}
-
-#departamentoViewContent .itemcontainer{
-	margin-left: 10px;
-	padding-left: 6px;
-}
-
-#departamentoViewContent .infoDepto{
-	padding-top: 8px;
-}
-
-#departamentoViewContent .itemOptions{
-	padding-top: 16px;
-	margin-left: 80px;
-	max-width: 40%;
-}
-
-
 /* fin Checkin view */
 
 /* Logs Entries */
-#logentries{
-		width: 100%;
+#logentries, #dispositivoscontainer{
+		width: 80%;
 		text-align: center;
+		display: inline-block;
 		/*border: solid 2px #C2C2C2; */
 		
 }
+div.logsfechacontainer{
+	margin: 16px;
+}
+div.logsfechacontainer span.title{
+	font: 20px 'lucida sans', 'trebuchet MS', 'Tahoma';
+	font-weight: bold;
+}
+#logsfecha{
+	width: 130px;
+	height: 26px;
+	padding: 3px;
+	font: 20px 'lucida sans', 'trebuchet MS', 'Tahoma';
+	color: #AD2E2B;
+	border: 1px solid #55BA50;
+	-moz-box-shadow: 0 1px 1px #ddd inset, 0 1px 0 #fff;
+	-webkit-box-shadow: 0 1px 1px #ddd inset, 0 1px 0 #fff;
+	box-shadow: 0 1px 1px #ddd inset, 0 1px 0 #fff;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+}
+
 #logsTableContainer
 {
-	text-align: left;
-	display: inline-block;
+	text-align: center;
+
 }
 #logsTableContainer .fixedHeader{
 	padding-left: 10px;
@@ -435,6 +432,8 @@ footer a{
 	padding: 5px 15px 5px 0px;
 	text-align: left;
 }
+
+
 
 .totales{
 	text-align: left;
@@ -565,13 +564,17 @@ textarea{
 	text-decoration:none;
 	text-align:center;
 	text-shadow:1px 1px 0px #d4b9b9;
+	text-decoration: none;
 }
 .botonCancel:hover {
 	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ebbdb9), color-stop(1, #ffe5ef) );
 	background:-moz-linear-gradient( center top, #ebbdb9 5%, #ffe5ef 100% );
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ebbdb9', endColorstr='#ffe5ef');
 	background-color:#ebbdb9;
+	text-decoration: none;
 }.botonCancel:active {
 	position:relative;
 	top:1px;
 }
+
+/* Magnific popup title*/

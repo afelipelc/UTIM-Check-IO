@@ -19,18 +19,12 @@
           %input{value: @device.devicetoken, placeholder: "Código generado", readonly: "readonly", class: "deviceidtext", id: "claveGen"}
       %span.addNew
         - if @device.id
-          = link_to image_tag("barcode.png", :border => 0), printbarcode_devices_path(:id => @device.devicetoken), :remote => false, :class => "imageLink printBarCode", :title => "Imprimir código de dispositivo"
+          = link_to image_tag("barcode.png", :border => 0), printbarcode_devices_path(:id => @device.devicetoken), :remote => false, :class => "imageLink", :title => "Imprimir código de dispositivo", :"data-popup" => "true"
         - else
           = image_tag "barcode.png"
     %div
       #contenedorImagenView
-        - if !@device.owner.id.nil?
-          - if @device.owner.hasPicture
-            = link_to image_tag("/userpics/" + @device.owner_id.to_s + ".jpg"), takepicture_devices_path(:id =>@device.devicetoken), :remote => false, :class => " takepicture", :title => "Cambiar foto del propietario"
-          - else
-            = link_to image_tag("user.png"), takepicture_devices_path(:id => @device.devicetoken), :remote => false, :class => " takepicture", :title => "Tomar foto del propietario"
-        - else
-          = image_tag "user.png"
+        = image_tag "user.png"
         %br/
         %span Propietario
       #datosPropietario

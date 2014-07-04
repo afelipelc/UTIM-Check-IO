@@ -1,0 +1,6 @@
+%h1 Reportar fallo
+- if flash[:notice]
+  = flash[:notice]
+= form_tag(:action => "procesarfallo", :controller => "information")  do
+  = text_area_tag :reporte, params[:reporte],:id=>"reporteContenido", :class=>"fallotextarea", :placeholder=>"Describe aquí el reporte"
+  = submit_tag "Enviar", :class=>"reportebtn"

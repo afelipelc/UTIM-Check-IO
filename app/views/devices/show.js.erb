@@ -1,15 +1,35 @@
 $("#mainContent").html("<%= escape_javascript(render(:partial => "form"))%>");
 
 $('#owner_clave').on("change",function() {
- //  if($(this).val() != ""){
-	//   $.getJSON("http://0.0.0.0:3000/owners/find.json?clave=" + $(this).val(),
-	//     function(data) {
-	//       $("#owner_nombre").val(data.nombre);
-	//       $("#owner_pe").val(data.pe);
-	//     });
-	// }
-	alert("hola show");
+	dataOwner(this);
+  //if($(this).val() != ""){
+  	//alert("data"+"http://localhost:3000/owners/find.json?clave=" + $(this).val());
+	  // $.getJSON("http://localhost:3000/owners/find.json?clave=" + $(this).val(),
+	  //   function(data) {
+	  //   	alert(data.nombre);
+	  //     $("#owner_nombre").val(data.nombre);
+	  //     $("#owner_pe").val(data.pe);
+	  //     //$("#owner_id").val(data.id);
+	  //   });
+	// }else
+	// {
+	//  alert("no data");
+	// 	$("#owner_nombre").val("");
+	// 	$("#owner_pe").val("");
+	// 	$("#owner_id").val("");
+	//}
 });
 setTimeout(function() {
 	$("#notinfo").slideUp();
 }, 3000);
+
+// $('a[data-popup]').on('click', function(e) { 
+//     //window.open($(this).attr('href')); 
+//     window.open( $(this).attr('href'), "Imprimir etiqueta", "height=300, width=600" );
+//     e.preventDefault(); 
+// });
+
+// $('a[data-popup].takepicture').on('click', function(e){
+// 	window.open( $(this).attr('href'), "Tomar foto", "height=600, width=900" );
+// 	e.preventDefault();
+// });

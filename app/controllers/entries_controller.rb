@@ -80,8 +80,8 @@ def checkdevice
           @entry = Entry.where(:device_id => datosDev[1].to_i, :ingreso => hoy.beginning_of_day..hoy.end_of_day, :egreso => nil).first
 
           if @entry
-            puts @entry.device.owner_id
-            puts datosDev[2]
+            # puts @entry.device.owner_id
+            # puts datosDev[2]
             if(@entry.device.owner_id != datosDev[2].to_i || @entry.device.owner.clave != datosDev[0])
               flash[:error] = "El dispositivo no pertenece al propietario. \nPase el código de barras del dispositivo sobre el lector."
               redirect_to :action => 'index'
@@ -103,13 +103,15 @@ def checkdevice
           else
             #registrar el ingreso
             #device = Device.find(params[:id])
-            device = Device.validarToken(datosDev[0], datosDev[1].to_i, datosDev[2].to_i) #Device.find(datosDev[1].to_i)
-            if device
-                if(device.owner_id != datosDev[2].to_i || device.owner.clave != datosDev[0])
-                  flash[:error] = "El dispositivo no pertenece al propietario. \nPase el código de barras del dispositivo sobre el lector."
-                  redirect_to :action => 'index'
-                  return
-                end
+            device = Device.validarToken(datosDev) #datosDev[0], datosDev[1].to_i, datosDev[2].to_i) #Device.find(datosDev[1].to_i)
+            if device.id>0  ## the device obtained is readonly caused by JOIN in validatToken method
+              #reload device in writemode
+              device = Device.find(device.id)
+                # if(device.owner_id != datosDev[2].to_i || device.owner.clave != datosDev[0])
+                #   flash[:error] = "El dispositivo no pertenece al propietario. \nPase el código de barras del dispositivo sobre el lector."
+                #   redirect_to :action => 'index'
+                #   return
+                # end
                 @entry = Entry.new
                 @entry.ingreso = Time.new
                 @entry.device = device
@@ -121,6 +123,9 @@ def checkdevice
                   flash[:error] = "Ocurrió un error al intentar registrar el Ingreso."
                   redirect_to :action => 'index'
                 end  
+            else
+                flash[:error] = "El dispositivo no pertenece al propietario. \nPase el código de barras del dispositivo sobre el lector."
+                redirect_to :action => 'index'
             end
           end
         end
@@ -136,15 +141,21 @@ def checkdevice
   end
 
 def logs
-  hoy = Time.new
-  if params[:id]
-     @entries = Entry.where(:device_id => params[:id])
-     if @entries.blank?
-       @entries = Entry.where(:ingreso => hoy.beginning_of_day..hoy.end_of_day)
-       flash[:error] = "No se encontraron registros de este Dispositivo " + params[:id]
-     end
-  else
-    @entries = Entry.where(:ingreso => hoy.beginning_of_day..hoy.end_of_day)
+  if params[:date]
+    fecha = Date.strptime(params[:date], "%d/%m/%Y")
+    @entries = Entry.where(:ingreso => fecha.beginning_of_day..fecha.end_of_day).order(ingreso: :desc)
+  else  
+    hoy = Time.new
+    if params[:id]
+       @entries = Entry.where(:device_id => params[:id]).order(ingreso: :desc)
+       if @entries.blank?
+         @entries = Entry.where(:ingreso => hoy.beginning_of_day..hoy.end_of_day)
+         flash[:error] = "No se encontraron registros de este Dispositivo " + params[:id]
+       end
+    else
+      @entries = Entry.where(:ingreso => hoy.beginning_of_day..hoy.end_of_day).order(ingreso: :desc)
+      params[:date] = Time.new.strftime("%d/%m/%Y")
+    end
   end
 end
 

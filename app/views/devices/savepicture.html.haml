@@ -1,0 +1,5 @@
+- if flash[:notice]
+  %h4.info.green= flash[:notice]
+- if flash[:imagen]
+  %div#imageresult= image_tag("/userpics/"+flash[:imagen])
+= link_to "Cerrar ventana", "javascript:void(window.close())", :class => "botonOk"

@@ -5,20 +5,20 @@
     %h4#notinfo.alert_success= flash[:notice]
   - if flash[:error]
     %h4#noterror.alert_error= flash[:error]
-  %div.logsfechacontainer
+  %h3 Registros de ingresos y egresos
+  %div 
     = form_tag logs_entries_path, :id=>"logsfechaform", :method=>"post", :remote=>"true" do
-      %span.title Registros de ingresos y egresos del día &nbsp;
-      %span
+      %span Registros del día
       = text_field_tag :date, params[:date],:id=>"logsfecha", :class=>"datepicker", :readonly=>"readonly", :placeholder=>"dd/mm/yyyy"
   #logsTableContainer.tableContainer
-    %table#logentriestable
-      %thead
+    %table.tablesorter.scrollTable{cellspacing: "0"}
+      %thead.fixedHeader
         %tr
           %th Dispositivo
           %th Propietario
           %th Ingreso
           %th Egreso
-      %tbody
+      %tbody#logentries.scrollContent{ style: "height:420px;"}
         - @entries.each do |entry|
           %tr.rowentry
             %td
@@ -31,3 +31,14 @@
             %td
               - if entry.egreso
                 = entry.egreso.strftime("%d %b %y %H:%M:%S")  
+        %tr#infinite-scroll
+      %tfoot
+        %tr
+          %td{colspan: 4}
+            - if @entries.blank?
+              %input#lastid{type: "hidden", value: "0"}
+            - else
+              %input#lastid{type: "hidden", value: "#{ @entries.to_a.last.id }"}
+            %strong
+              Total de registros mostrados:
+              %span#totallogs= @entries.count

@@ -5,10 +5,10 @@
     %h4#notinfo.alert_success= flash[:notice]
   - if flash[:error]
     %h4#noterror.alert_error= flash[:error]
-  %div.logsfechacontainer
+  %h3 Registros de ingresos y egresos
+  %div 
     = form_tag logs_entries_path, :id=>"logsfechaform", :method=>"post", :remote=>"true" do
-      %span.title Registros de ingresos y egresos del día &nbsp;
-      %span
+      %span Registros del día
       = text_field_tag :date, params[:date],:id=>"logsfecha", :class=>"datepicker", :readonly=>"readonly", :placeholder=>"dd/mm/yyyy"
   #logsTableContainer.tableContainer
     %table#logentriestable
