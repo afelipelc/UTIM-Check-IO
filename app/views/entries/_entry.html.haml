@@ -14,7 +14,10 @@
   %div
     #contenedorImagenView
       - if @entry.device.owner.nombre
-        = image_tag "user.png"
+        - if @entry.device.owner.hasPicture
+          = image_tag("/userpics/" + @entry.device.owner_id.to_s + ".jpg")
+        - else
+          = image_tag "user.png"
       -else
         = image_tag "scanner.png"
       %br/

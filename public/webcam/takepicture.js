@@ -1,6 +1,8 @@
 Webcam.set({
   image_format: 'jpeg',
-  jpeg_quality: 90
+  jpeg_quality: 95,
+  width: 320,
+  height: 240
 });
 
 Webcam.attach( '#my_camera' );
@@ -19,7 +21,8 @@ function take_snapshot() {
 
 function save_picture(){
 	var idDev = document.getElementById('iddev').value;
-	var token = document.getElementById('token').value;
+	//var token = document.getElementById('token').value;
+	//alert(token);
 	if(idDev == null)
 	{
 		alert("No se puede procesar la foto, recarga esta ventana.");
@@ -27,7 +30,7 @@ function save_picture(){
 	}
 	if(data_uri != null)
 	{
-		Webcam.upload( data_uri, 'http://0.0.0.0:3000/devices/savepicture?id=' + idDev + "&authenticity_token=" + token, function(code, text) {
+		Webcam.upload( data_uri, 'http://0.0.0.0:3000/devices/savepicture?id=' + idDev, AUTH_TOKEN, function(code, text) {
 		// Upload complete!
 		// 'code' will be the HTTP response code from the server, e.g. 200
 		// 'text' will be the raw response content

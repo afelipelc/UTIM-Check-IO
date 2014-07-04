@@ -179,10 +179,10 @@ end
 def savepicture
   #code taked from http://www.tutorialspoint.com/ruby-on-rails/rails-file-uploading.htm
   puts "se manda a guardar la foto"
-  post = DataFile.save(params[:webcam], params[:id])
+  post = DataFile.save(params[:webcam], params[:id].split(":"))
   if(!post.nil?)
     flash[:notice] = "La imagen se ha guardado correctamente"
-    flash[:imagen] = params[:id] + ".jpg"
+    flash[:imagen] = params[:id].split(":")[2] + ".jpg"
     render :layout => false, status: 200
   else
     render plain: "No se pudo guardar la imagen", status: 500

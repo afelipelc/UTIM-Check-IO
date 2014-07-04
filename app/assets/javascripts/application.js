@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery.ui.datepicker
 //= require dataTables/jquery.dataTables
+//= require magnific-popup
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree
@@ -24,18 +25,21 @@ $(document).on('page:load', function() {
     	$("#checkdevform #id").focus();
     }
 
-    $('a[data-popup]').on('click', function(e) { 
-	    e.preventDefault();
-	    openPopup(this);
-	});
-	$('.takepicture').on('click', function(e){
-		//get the Token autentication value by meta_tag
-		var token = $('meta[name=csrf-token]').attr("content");
-		window.open( $(this).attr('href') + "&token=" + token, "Tomar foto", "height=600, width=900" );
-		e.preventDefault();
-	});
-});
+ //    $('a[data-popup]').on('click', function(e) { 
+	//     e.preventDefault();
+	//     openPopup(this);
+	// });
+	// $('.takepicture').on('click', function(e){
+	// 	//get the Token autentication value by meta_tag
+	// 	var token = $('meta[name=csrf-token]').attr("content");
+	// 	window.open( $(this).attr('href'), "Tomar foto", "height=600, width=900" );
+	// 	e.preventDefault();
+	// });
 
+	$('.takepicture').magnificPopup({type:'iframe', itleSrc: 'Cambiar foto del propietario'});
+	$('.printBarCode').magnificPopup({type:'iframe', itleSrc: 'Imprimir código'});
+});
+//mfp-content
 $(document).keyup(function(event) {
 	//$("#searchForm #id").on("keypress", function(event){
 	if ( event.which == 27 && $("#checkdevform").length > 0) {
@@ -46,17 +50,20 @@ $(document).keyup(function(event) {
 });
 
 $(document).ready(function(){
-	$('a[data-popup]').on('click', function(e) { 
-	    e.preventDefault();
-	    openPopup(this);
-	});
-	$('.takepicture').on('click', function(e){
-		//get the Token autentication value by meta_tag
-		var token = $('meta[name=csrf-token]').attr("content");
-		window.open( $(this).attr('href') + "&token=" + token, "Tomar foto", "height=600, width=900" );
-		e.preventDefault();
-	});
+	// $('a[data-popup]').on('click', function(e) { 
+	//     e.preventDefault();
+	//     openPopup(this);
+	// });
+	// $('.takepicture').on('click', function(e){
+	// 	//get the Token autentication value by meta_tag
+	// 	var token = $('meta[name=csrf-token]').attr("content");
+	// 	window.open( $(this).attr('href'), "Tomar foto", "height=600, width=900" );
+	// 	e.preventDefault();
+	// });
 
+	$('.takepicture').magnificPopup({type:'iframe', itleSrc: 'Cambiar foto del propietario'});
+	$('.printBarCode').magnificPopup({type:'iframe', itleSrc: 'Imprimir código'});
+	
 	$('#owner_clave').on("change",function() {
 	dataOwner(this);
 	});

@@ -1,7 +1,7 @@
 class DataFile < ActiveRecord::Base
   def self.save(upload, idDev)
     #name =  upload['datafile'].original_filename
-    name = idDev + ".jpg"
+    name = idDev[2] + ".jpg"
     directory = "public/userpics"
     # create the file path
     path = File.join(directory, name)

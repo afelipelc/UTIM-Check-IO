@@ -1,29 +1,25 @@
 %html
   %head
     = csrf_meta_tag
+    = javascript_tag "var AUTH_TOKEN = '#{form_authenticity_token}';" if protect_against_forgery?
     %link{:rel => :stylesheet, :type => :"text/css", :href => "/stylesheets/takepicture.css"}
   %body
-    %p.info.top Permita el acceso a la cámara por parte del navegador (Allow | Permitir).
+    %p.info.top Permita el acceso a la cámara por parte del navegador (<b>Allow</b> | Permitir).
     - if flash[:error]
       %h4#noterror.alert_error= flash[:error]
-    %h3 Capturar fotografía del propietario
-    %p.owner= @device.owner.nombre
+    %div
+      %span Capturar fotografía del propietario:
+      %span.owner= @device.owner.nombre
     %input{:type =>"hidden", :id => "iddev", :value=>@device.devicetoken}
-    %input{:type =>"hidden", :id => "token", :value=>params[:token]}
     %div#maincontent
       %div#pictureview
         %div#my_camera{:style=>"width:340px; height:260px;"}
         %div#my_result
       .clearLine
-        = form_tag("savepicture", method: "post") do
-          = hidden_field_tag(:mydata)
-          %input{:type =>"hidden", :id => "iddev", :value=>@device.devicetoken}
-          = submit_tag("Enviar Foto")
       %div#options
-      = javascript_include_tag( "/webcam/webcam.min.js" )
+      = javascript_include_tag( "/webcam/webcam.js" )
       = javascript_include_tag( "/webcam/takepicture.js" )
       %p.info  Antes de presionar <strong>Capturar</strong> imagen, espere a que aparezca el visor de la cámara.
       .clearLine
       = link_to "Capturar", "javascript:void(take_snapshot())", :class => "botonOk"
       = link_to "Guardar", "javascript:void(save_picture())", :id =>"guardarImagen", :class => "botonOk"
-      = link_to "Cancelar", "javascript:void(window.close())", :id=>"cancelarImagen", :class => "botonCancel"

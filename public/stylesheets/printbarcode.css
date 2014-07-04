@@ -6,7 +6,9 @@
 }
 body{
   text-align: left;
-  background-color: #fff;
+  background-color: #f3f3f3;
+  height: 220px;
+  width: 320px;
 }
 #maincontent{
   text-align: center;
