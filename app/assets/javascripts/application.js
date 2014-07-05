@@ -78,7 +78,7 @@ function dataOwner(object){
 	if($(object).val() != ""){
 	$.ajax({
 	  dataType: "json",
-	  url: "http://localhost:3000/owners/find.json?clave=" + $(object).val()})
+	  url: "http://0.0.0.0:3000/owners/find.json?clave=" + $(object).val()})
 	.done(function(data) {
 	      $("#owner_nombre").val(data.nombre);
 	      $("#owner_pe").val(data.pe);

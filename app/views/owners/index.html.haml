@@ -1,25 +1,22 @@
-%h1 Listing owners
-
-%table
-  %tr
-    %th Nombre
-    %th Tipo
-    %th Clave
-    %th Pe
-    %th
-    %th
-    %th
-
-  - @owners.each do |owner|
-    %tr
-      %td= owner.nombre
-      %td= owner.tipo
-      %td= owner.clave
-      %td= owner.pe
-      %td= link_to 'Show', owner
-      %td= link_to 'Edit', edit_owner_path(owner)
-      %td= link_to 'Destroy', owner, :method => :delete, :data => { :confirm => 'Are you sure?' }
-
+%h1 Propietarios registrados
+#buscarproducto
+  = form_tag(owners_path, method: "get") do
+    = text_field_tag(:q, nil, :placeholder => "Buscar propietario")
 %br
-
-= link_to 'New Owner', new_owner_path
+#ownerdevices
+  %table.ui-grid-content.ui-widget-content
+    %thead
+      %tr
+        %th.ui-state-default Clave
+        %th.ui-state-default Nombre
+        %th.ui-state-default Tipo
+        %th.ui-state-default Programa Educativo
+    - if !@owners.nil?
+      - @owners.each do |owner|
+        %tbody
+          %tr
+            %td.ui-widget-content= link_to owner.clave, owner
+            %td.ui-widget-content= link_to owner.nombre, owner
+            %td.ui-widget-content= owner.tipo
+            %td.ui-widget-content= owner.pe
+%br/

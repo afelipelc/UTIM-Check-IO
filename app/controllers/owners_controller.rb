@@ -4,7 +4,11 @@ class OwnersController < ApplicationController
   # GET /owners
   # GET /owners.json
   def index
-    @owners = Owner.all
+    #@owners = Owner.all
+    if params[:q]
+      @owners = Owner.where("nombre LIKE '%"+params[:q]+"%' or clave LIKE '%"+params[:q]+"%'")
+    end
+
   end
 
   def find
@@ -29,15 +33,17 @@ class OwnersController < ApplicationController
   # GET /owners/1
   # GET /owners/1.json
   def show
+    #puts "Dispositivos prop: " + @owner.devices.count.to_s
   end
 
   # GET /owners/new
   def new
-    @owner = Owner.new
+    redirect_to :owners #no permit
   end
 
   # GET /owners/1/edit
-  def edit
+  def edit 
+    redirect_to :owners #no permit
   end
 
   # POST /owners
@@ -59,25 +65,13 @@ class OwnersController < ApplicationController
   # PATCH/PUT /owners/1
   # PATCH/PUT /owners/1.json
   def update
-    respond_to do |format|
-      if @owner.update(owner_params)
-        format.html { redirect_to @owner, notice: 'Owner was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @owner.errors, status: :unprocessable_entity }
-      end
-    end
+    redirect_to :owners #no permit
   end
 
   # DELETE /owners/1
   # DELETE /owners/1.json
   def destroy
-    @owner.destroy
-    respond_to do |format|
-      format.html { redirect_to owners_url }
-      format.json { head :no_content }
-    end
+    redirect_to :owners #no permit
   end
 
   private

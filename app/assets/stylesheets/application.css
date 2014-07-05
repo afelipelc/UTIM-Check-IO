@@ -389,7 +389,7 @@ footer a{
 /* fin Checkin view */
 
 /* Logs Entries */
-#logentries, #dispositivoscontainer{
+#logentries, #dispositivoscontainer, #ownerdevices{
 		width: 80%;
 		text-align: center;
 		display: inline-block;
@@ -477,7 +477,15 @@ textarea{
 }
 /*Fin - Departamento FORM */
 
-
+/* dispositivos owner*/
+#ownerdevices{
+	width: 450px;
+	text-align: center;
+}
+#ownerdevices table{
+	border-collapse: collapse;
+	width:100%;
+}
 /* BOTONES from http://www.cssbuttongenerator.com/ */
 
 .botonOk {

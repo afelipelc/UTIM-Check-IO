@@ -4,7 +4,6 @@ class DevicesController < ApplicationController
   # GET /devices
   # GET /devices.json
   def index
-      
       respond_to do |format|
         #@devices = Device.all
         if params[:q]
@@ -126,7 +125,7 @@ def search
         else
           #redirect_to :action => "index", :q => params[:id]
           # @devices = Device.all
-          redirect_to :action => "index", :q => params[:id]
+          redirect_to owners_path(:q => params[:id])
         end
       else
         render action: 'index'
