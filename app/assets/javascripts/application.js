@@ -18,27 +18,6 @@
 //= require turbolinks
 //= require_tree
 
-//on reload with turbolinks
-$(document).on('page:load', function() {
-    if ($("#checkdevform").length > 0)
-    {
-    	$("#checkdevform #id").focus();
-    }
-
- //    $('a[data-popup]').on('click', function(e) { 
-	//     e.preventDefault();
-	//     openPopup(this);
-	// });
-	// $('.takepicture').on('click', function(e){
-	// 	//get the Token autentication value by meta_tag
-	// 	var token = $('meta[name=csrf-token]').attr("content");
-	// 	window.open( $(this).attr('href'), "Tomar foto", "height=600, width=900" );
-	// 	e.preventDefault();
-	// });
-
-	$('.takepicture').magnificPopup({type:'iframe', itleSrc: 'Cambiar foto del propietario'});
-	$('.printBarCode').magnificPopup({type:'iframe', itleSrc: 'Imprimir código'});
-});
 //mfp-content
 $(document).keyup(function(event) {
 	//$("#searchForm #id").on("keypress", function(event){
@@ -49,30 +28,24 @@ $(document).keyup(function(event) {
 	  }
 });
 
-$(document).ready(function(){
-	// $('a[data-popup]').on('click', function(e) { 
-	//     e.preventDefault();
-	//     openPopup(this);
-	// });
-	// $('.takepicture').on('click', function(e){
-	// 	//get the Token autentication value by meta_tag
-	// 	var token = $('meta[name=csrf-token]').attr("content");
-	// 	window.open( $(this).attr('href'), "Tomar foto", "height=600, width=900" );
-	// 	e.preventDefault();
-	// });
+var ready;
+ready = function(){
+	if ($("#checkdevform").length > 0)
+    {
+    	$("#checkdevform #id").focus();
+    }
 
 	$('.takepicture').magnificPopup({type:'iframe', itleSrc: 'Cambiar foto del propietario'});
 	$('.printBarCode').magnificPopup({type:'iframe', itleSrc: 'Imprimir código'});
 	
 	$('#owner_clave').on("change",function() {
-	dataOwner(this);
+		dataOwner(this);
 	});
-});
-
-function openPopup(object){
-	window.open( $(object).attr('href'), "Imprimir etiqueta", "height=200, width=400" );
-	e.preventDefault(); 
 }
+
+$(document).ready(ready);
+//on reload with turbolinks
+$(document).on('page:load', ready);
 
 function dataOwner(object){
 	if($(object).val() != ""){
@@ -91,4 +64,3 @@ function dataOwner(object){
 	    });
 	}
 }
-
