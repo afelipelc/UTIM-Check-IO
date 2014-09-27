@@ -1,5 +1,9 @@
 %html
   %head
+    %meta{content: "max-age=0", "http-equiv" => "cache-control"}/
+    %meta{content: "no-cache", "http-equiv" => "cache-control"}/
+    %meta{content: "0", "http-equiv" => "expires"}/
+    %meta{content: "Tue, 01 Jan 2014 1:00:00 UTC", "http-equiv" => "expires"}/
     = csrf_meta_tag
     = javascript_tag "var AUTH_TOKEN = '#{form_authenticity_token}';" if protect_against_forgery?
     %link{:rel => :stylesheet, :type => :"text/css", :href => "/stylesheets/takepicture.css"}

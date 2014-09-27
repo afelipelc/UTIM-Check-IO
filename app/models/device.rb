@@ -1,6 +1,6 @@
 class Device < ActiveRecord::Base
 	belongs_to :owner, :autosave => true
-	has_many :entrys
+	has_many :entries
 
 	def self.validarToken(params)#ownerClave, idDevice, idOwner)
     if params#ownerClave && idOwner && idDevice

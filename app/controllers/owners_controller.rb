@@ -1,4 +1,6 @@
 class OwnersController < ApplicationController
+  before_action :authenticate_user!, :except => [:find]
+  load_and_authorize_resource
   before_action :set_owner, only: [:show, :edit, :update, :destroy]
 
   # GET /owners
@@ -15,6 +17,7 @@ class OwnersController < ApplicationController
     respond_to do |format|
       if params[:clave]
         @owner = Owner.where(:clave => params[:clave]).first
+        puts "se localizo el propietario" +  @owner.nombre
         if @owner
           format.html { redirect_to @owner }
           format.json { render json: @owner, status: :ok}

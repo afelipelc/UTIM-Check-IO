@@ -1,11 +1,13 @@
 Checkin::Application.routes.draw do
 
+  devise_for :users
   get "information/index"
   get "information/about"
   get "information/reportarfallo"
   post "information/procesarfallo"
   #get "devices/show/:id" => "devices#show"
   #get "devices/search/:id" => "devices#search"
+  resources :admins
   resources :entries do
     collection do
       post :checkdevice

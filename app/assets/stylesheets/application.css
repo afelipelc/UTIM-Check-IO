@@ -56,7 +56,8 @@ header .logo{
 header .title
 {
 	display: inline-block;
-	width: 55%;
+	max-width: 55%;
+	min-width: 40%;
 	position: relative;
 	margin-top: 25px;
 	text-align: center;
@@ -77,13 +78,15 @@ header #formContainer {
 	margin-top:10px;
 	margin-right: 90px;
 	*/
+	text-align: right;
 	display: inline-block;
 	padding-top: 15px;
 	padding-bottom: 0px;
 	position: absolute;
 }
 header #formContainer #searchForm #id{
-	width: 95%;
+	margin-right: 8px;
+	width: 300;
 	padding: 2px;
 	font: 18px 'lucida sans', 'trebuchet MS', 'Tahoma';
 	color:#41783E;
@@ -110,13 +113,20 @@ header #formContainer .opciones a{
 }
 header #formContainer .opciones  a:hover{
 	height: 52px;
-	width: 52px;
+	/*width: 52px;*/
 	display: inline-block;
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
 	border-radius: 4px;
 }
 
+.alert, .alert_error{
+	color: #9E491E;
+}
+
+.alert_success{
+	color: #0E5E1A;
+}
 /* General Article */
 article{
 	width: 90%;
@@ -535,6 +545,60 @@ textarea{
 	top:1px;
 }
 
+/*Form Login*/
+#new_user input[type="text"], #new_user input[type="password"], 
+.form-user input[type="text"], .form-user input[type="password"], 
+.form-user input[type="email"], .form-user select{
+
+	margin-bottom: 8px;
+
+	width: 210px;
+	padding: 4px;
+	font: 18px 'lucida sans', 'trebuchet MS', 'Tahoma';
+
+	border: 1px solid #C7C7C7;
+	-moz-box-shadow: 0 1px 1px #ddd inset, 0 1px 0 #fff;
+	-webkit-box-shadow: 0 1px 1px #ddd inset, 0 1px 0 #fff;
+	box-shadow: 0 1px 1px #ddd inset, 0 1px 0 #fff;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+}
+
+.form-user{
+	width: 650px;
+	text-align: center;
+	margin-left: 150px;
+}
+.control-group.error{
+	color: #96140E;
+}
+
+.control-group label{
+	display: block;
+	max-width: 180px;
+	text-align: right;
+}
+.control-group .controls{
+	position: block;
+	margin-top: -14px;
+}
+
+.form-actions{
+	margin-top: 20px;
+}
+
+.table-striped th{
+	background-color: #ccc;
+}
+.table-striped, .table-striped th, .table-striped td {
+	border: 1px solid #ccc;
+	border-collapse: collapse;
+}
+
+.table-striped th, .table-striped td{
+	padding: 4px 8px 4px 8px;
+}
 
 .botonCancel {
 	-moz-box-shadow:inset 0px 1px 0px 0px #f5978e;

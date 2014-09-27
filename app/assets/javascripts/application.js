@@ -56,10 +56,12 @@ function dataOwner(object){
 	      $("#owner_nombre").val(data.nombre);
 	      $("#owner_pe").val(data.pe);
 	      $("#owner_id").val(data.id);
-	    }).fail(function(){
+	      $("#device_owner_id").val(data.id);
+	    })
+	.fail(function(data){
 	    	$("#owner_nombre").val("");
 			$("#owner_pe").val("");
-			//$("#owner_id").val("");
+			//$("#owner_id").val(""); //para no desasociar
 			$('#owner_clave').focus();
 	    });
 	}

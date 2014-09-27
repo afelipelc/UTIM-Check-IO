@@ -1,0 +1,86 @@
+<h2>Editar mi perfil</h2>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: 'form-user' }) do |f| %>
+  <%= devise_error_messages! %>
+  <% if User.first.nil? %>
+    <p>Está registrando el primer usuario. Este será el Administrador</p>
+  <% end %>
+  <div class="control-group"></div>
+  <div class="control-group<%= resource.errors[:username].any? ? " error" : "" %>">
+    <%= f.label :nombre_usuario, :class => 'control-label' %>
+    <div class="controls">
+    <%= f.text_field :username, autofocus: true, :class => 'text_field' %>
+    <span class="help-inline">
+      <%= resource.errors[:username].any? ? resource.errors[:username].to_s[/\w([^"]*)/] : "" %></span>
+    </div>
+  </div>
+  <div class="control-group<%= resource.errors[:nombre].any? ? " error" : "" %>">
+    <%= f.label :nombre, :class => 'control-label' %>
+    <div class="controls">
+    <%= f.text_field :nombre, :class => 'text_field' %>
+    <span class="help-inline">
+      <%= resource.errors[:nombre].any? ? resource.errors[:nombre].to_s[/\w([^"]*)/] : "" %></span>
+   </div>
+  </div>
+  <div class="control-group<%= resource.errors[:email].any? ? " error" : "" %>">
+    <%= f.label :email, :class => 'control-label' %>
+    <div class="controls">
+    <%= f.email_field :email, autofocus: true, :class => 'text_field' %>
+    <span class="help-inline">
+      <%= resource.errors[:email].any? ? resource.errors[:email].to_s[/\w([^"]*)/] : "" %></span>
+    </div>
+  </div>
+
+  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+    <div>Esperando confirmación de: <%= resource.unconfirmed_email %></div>
+  <% end %>
+  <% if resource.admin? && current_user.id != resource.id %>
+    <div class="control-group">
+      <%= f.label :rol, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.select :role, options_for_select(User::roles.collect { |s| [s[0].humanize, s[0]] }, selected: resource.role) %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :activo, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.radio_button :activo, true %> Si &nbsp;&nbsp;
+        <%= f.radio_button :activo, false %> No
+      </div>
+  </div>
+  <% end %>
+
+  <div class="control-group"></div>
+
+  <div class="control-group<%= resource.errors[:password].any? ? " error" : "" %>">
+    <%= f.label :contraseña, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.password_field :password, autocomplete: "off", :class => 'text_field' %><br>
+    <span class="help-inline">
+      <i>(Dejar vacío si no desea cambiarla)</i><br>
+      <%= resource.errors[:password].any? ? resource.errors[:password].to_s[/\w([^"]*)/] : "" %></span><br>
+    </div>
+  </div>
+  <div class="control-group<%= resource.errors[:password_confirmation].any? ? " error" : "" %>">
+    <%= f.label :confirmación_contraseña, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.password_field :password_confirmation, autocomplete: "off" %>
+      <span class="help-inline">
+      <%= resource.errors[:password_confirmation].any? ? resource.errors[:password_confirmation].to_s[/\w([^"]*)/] : "" %></span>
+    </div>
+  </div>
+<br><br>
+  <div class="control-group<%= resource.errors[:current_password].any? ? " error" : "" %>">
+    <%= f.label :contraseña_actual, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.password_field :current_password, autocomplete: "off" %><br>
+      <span class="help-inline">
+      <i>(Se necesita para guardar los cambios)</i>
+      <%= resource.errors[:current_password].any? ? resource.errors[:current_password].to_s[/\w([^"]*)/] : "" %></span>
+    </div>
+  </div>
+  <div class="form-actions">
+    <%= f.submit "Actualizar", :class => 'botonOk' %>
+    &nbsp;&nbsp; | &nbsp;&nbsp;<%= link_to "Regresar", :back, :class => "botonCancel" %>
+  </div>
+<% end %>
