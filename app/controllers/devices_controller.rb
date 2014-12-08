@@ -1,10 +1,11 @@
 class DevicesController < ApplicationController
+  before_action :authenticate_user!, :except => [:takepicture, :savepicture, :printbarcode, :search]
+  load_and_authorize_resource
   before_action :set_device, only: [:show, :edit, :update, :destroy]
 
   # GET /devices
   # GET /devices.json
   def index
-      
       respond_to do |format|
         #@devices = Device.all
         if params[:q]
@@ -41,16 +42,16 @@ class DevicesController < ApplicationController
     @device.registro = Time.new
     @device.ultimavez = Time.new
     
+    owner = Owner.new(owner_params)
+
     respond_to do |format|  
-      savedOwner = true #false
-      @device.owner = saveOwner
-      # if owner
-      #   @device.owner = owner
-      #   savedOwner = true
-      # else
-      #   flash[:error] = "Ya existe un propietario con la clave: " + owner_params[:clave]
-      #   format.html { render :action => 'new' } 
-      # end
+      if @device.owner_id.nil?
+        @device.owner = owner
+      else
+        @device.owner.nombre = owner.nombre
+        @device.owner.clave = owner.clave
+        @device.owner.pe = owner.pe
+      end
 
       if(@device.valid?)
         # if device exist, update
@@ -96,6 +97,13 @@ class DevicesController < ApplicationController
 
       end
 
+      #device update
+      @device.marca = device_params[:marca]
+      @device.tipo = device_params[:tipo]
+      @device.noserie = device_params[:noserie]
+      @device.color = device_params[:color]
+      @device.nota = device_params[:nota]
+
       if @device.save #.update_attributes(device_params[:id], owner_id: owner.id, tipo: device_params[:tipo], noserie: device_params[:noserie], marca: device_params[:marca], color: device_params[:color], nota: device_params[:nota]) #.update(device_params) & Owner.update(owner_params[:id], nombre: owner_params[:nombre], clave: owner_params[:clave], pe: owner_params[:pe])
         @device = Device.find(device_params[:id])
         flash[:notice] = "Se actualizó el Dispositivo."
@@ -110,23 +118,24 @@ class DevicesController < ApplicationController
   end
 
 def search
-      if params[:id]
-        if params[:id].is_number?
-          redirect_to :action => "edit", :id=> params[:id]
-        elsif params[:id].scan(/:/).length ==2
+      if params[:token]
+        puts "se ha recibido ID" + params[:token].to_s
+        if params[:token].is_number?
+          redirect_to :action => "edit", :id=> params[:token]
+        elsif params[:token].scan(/:/).length ==2
           #datosDev = params[:id].split(":")
           #redirect_to :action => "edit", :id=> datosDev[1]
-          @device = Device.validarToken(params[:id].split(":"))#datosDev[0], datosDev[1].to_i, datosDev[2].to_i)
+          @device = Device.validarToken(params[:token].split(":"))#datosDev[0], datosDev[1].to_i, datosDev[2].to_i)
           if(@device)
             redirect_to @device
           else
-            flash[:error] = "No se localizó el dispositivo con clave: " + params[:id]
+            flash[:error] = "No se localizó el dispositivo con clave: " + params[:token]
             redirect_to action: 'index'
           end
         else
           #redirect_to :action => "index", :q => params[:id]
           # @devices = Device.all
-          redirect_to :action => "index", :q => params[:id]
+          redirect_to owners_path(:q => params[:token])
         end
       else
         render action: 'index'
@@ -135,8 +144,8 @@ def search
 
 def takepicture
 
-  if params[:id]
-    @device = Device.validarToken(params[:id].split(":"))
+  if params[:token]
+    @device = Device.validarToken(params[:token].split(":"))
     if !@device.nil?
       render :layout => false
     else
@@ -148,8 +157,8 @@ def takepicture
 end
 
 def printbarcode
- if params[:id]
-  @device = Device.validarToken(params[:id].split(":"))
+ if params[:token]
+  @device = Device.validarToken(params[:token].split(":"))
   if !@device.nil?
     imagenFile = "#{Rails.root}/public/barcodes/" + @device.devicetoken + ".png"
     #check if barcode image exists
@@ -179,10 +188,10 @@ end
 def savepicture
   #code taked from http://www.tutorialspoint.com/ruby-on-rails/rails-file-uploading.htm
   puts "se manda a guardar la foto"
-  post = DataFile.save(params[:webcam], params[:id].split(":"))
+  post = DataFile.save(params[:webcam], params[:token].split(":"))
   if(!post.nil?)
     flash[:notice] = "La imagen se ha guardado correctamente"
-    flash[:imagen] = params[:id].split(":")[2] + ".jpg"
+    flash[:imagen] = params[:token].split(":")[2] + ".jpg"
     render :layout => false, status: 200
   else
     render plain: "No se pudo guardar la imagen", status: 500
@@ -219,7 +228,7 @@ end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def device_params
-      params.require(:device).permit(:id, :tipo, :noserie, :marca, :color, :nota, :nombre,:clave, :pe)
+      params.require(:device).permit(:id,:owner_id, :tipo, :noserie, :marca, :color, :nota)
     end
     def owner_params
       params.require(:owner).permit(:id, :nombre, :tipo, :clave, :pe)

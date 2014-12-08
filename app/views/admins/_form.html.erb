@@ -1,0 +1,63 @@
+<%= form_for @user, url: {action: "update"}, html: { method: :put, :class => 'form-user' } do |f| %>
+  <div class="control-group<%= @user.errors[:username].any? ? " error" : "" %>">
+    <%= f.label :nombre_usuario, :class => 'control-label' %>
+    <div class="controls">
+    <%= f.text_field :username, autofocus: true, :class => 'text_field' %>
+    <span class="help-inline">
+      <%= @user.errors[:username].any? ? @user.errors[:username].to_s[/\w([^"]*)/] : "" %></span>
+    </div>
+  </div>
+  <div class="control-group<%= @user.errors[:nombre].any? ? " error" : "" %>">
+    <%= f.label :nombre, :class => 'control-label' %>
+    <div class="controls">
+    <%= f.text_field :nombre, :class => 'text_field' %>
+    <span class="help-inline">
+      <%= @user.errors[:nombre].any? ? @user.errors[:nombre].to_s[/\w([^"]*)/] : "" %></span>
+   </div>
+  </div>
+  <div class="control-group<%= @user.errors[:email].any? ? " error" : "" %>">
+    <%= f.label :email, :class => 'control-label' %>
+    <div class="controls">
+    <%= f.email_field :email, autofocus: true, :class => 'text_field' %>
+    <span class="help-inline">
+      <%= @user.errors[:email].any? ? @user.errors[:email].to_s[/\w([^"]*)/] : "" %></span>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :rol, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.select :role, options_for_select(User::roles.collect { |s| [s[0].humanize, s[0]] }, selected: @user.role) %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :activo, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.radio_button :activo, true %> Si &nbsp;&nbsp;
+      <%= f.radio_button :activo, false %> No
+    </div>
+  </div>
+  <div class="control-group"></div>
+
+  <div class="control-group<%= @user.errors[:password].any? ? " error" : "" %>">
+    <%= f.label :contraseña, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.password_field :password, autocomplete: "off", :class => 'text_field' %>
+    <div class="help-inline">
+      <i>(Dejar vacío si no desea cambiarla)</i>
+      <br>
+      <%= @user.errors[:password].any? ? @user.errors[:password].to_s[/\w([^"]*)/] : "" %><br><br></div>
+    </div>
+  </div>
+  <div class="control-group<%= @user.errors[:password_confirmation].any? ? " error" : "" %>">
+    <%= f.label :confirmar_contraseña, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.password_field :password_confirmation, autocomplete: "off" %>
+      <span class="help-inline">
+      <%= @user.errors[:password_confirmation].any? ? @user.errors[:password_confirmation].to_s[/\w([^"]*)/] : "" %></span>
+    </div>
+  </div>
+  <div class="form-actions">
+    <%= f.submit "Actualizar", :class => 'botonOk' %>
+    &nbsp;&nbsp; | &nbsp;&nbsp;<%= link_to "Regresar", :back, :class => "botonCancel"%>
+  </div>
+<% end %>

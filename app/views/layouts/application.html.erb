@@ -2,7 +2,7 @@
 	<head>
 		<meta lang="ES">
 		<meta charset="utf-8">
-		<title>Check - in</title>
+		<title>Checador E|S</title>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
@@ -14,24 +14,35 @@
 
 			</span>
 			<span class="title">
-				<h1>Check - in</h1>
+				<h1>Checador E|S</h1>
 			</span>
 			<span id="formContainer">
 			<%= form_tag search_devices_path, :id=>"searchForm", :method => 'post' do %>
-         <%= text_field_tag :id, params[:id], :placeholder => "Buscar...", :value => "" %>
+         <%= text_field_tag :id, params[:id], :placeholder => "Buscar...", :value => "", :name => "token" %>
          <% end %>
 
 				<div class="opciones">
 					<%= link_to image_tag("scanner48.png"), root_path, :class => "imageLink", :title => "Registrar ingreso/egreso"%>
-					<%= link_to image_tag("today.png"), logs_entries_path, :remote => "true", :class => "imageLink", :title => "Ver registros de ingresos/egresos" %>
-					  <%= link_to image_tag("view_list.png"), devices_path, :class => "imageLink", :title => "Ver dispositivos" %>
-						<%= link_to image_tag("new.png"), new_device_path, :remote => "true", :class => "imageLink", :title => "Registrar dispositivo" %>
-					<a href="/information/reportarfallo" id="reportOpt" title="Reportar fallo de la aplicación" class="imageLink"><%= image_tag "send.png" %></a>
+					<%if user_signed_in? && current_user.admin? %>
+						<%= link_to image_tag("today.png"), logs_entries_path, :remote => "true", :class => "imageLink", :title => "Ver registros de ingresos/egresos" %>
+						<%= link_to image_tag("view_list.png"), devices_path, :class => "imageLink", :title => "Ver dispositivos" %>
+					<% end %>
+					<%= link_to image_tag("new.png"), new_device_path, :remote => "true", :class => "imageLink", :title => "Registrar dispositivo" %>
+		          <% if user_signed_in? %>
+		            <%= link_to image_tag("profile.png"), edit_user_registration_path, :class => "imageLink" %> 
+		            <%if current_user.admin? %>
+		            	<%= link_to image_tag("users-icon.png"), admins_path, :class => "imageLink", :title => "Administrar usuarios" %>
+		            <% end %>
+		            <%= link_to image_tag("logout-icon.png"), destroy_user_session_path, method: :delete, :class => "imageLink"  %>
+		          <% end %>
 				</div>
 			</span>
 			</div>
 		</header>
 		<article id="mainContent">
+		    <% if !alert.nil? %>
+              <p class="alert_error" id="notinfo"><%= alert %></p>
+            <% end %>
 		<%= yield %>
 		</article>
 		<div class="clearLine"></div>

@@ -1,18 +1,38 @@
 %p#notice= notice
-
-%p
-  %b Nombre:
-  = @owner.nombre
-%p
-  %b Tipo:
-  = @owner.tipo
-%p
-  %b Clave:
-  = @owner.clave
-%p
-  %b Pe:
-  = @owner.pe
-
-= link_to 'Edit', edit_owner_path(@owner)
-\|
-= link_to 'Back', owners_path
+#dispositivoForm
+  = form_for(@owner, :html => { :class => "dispositivoform"}) do |f|
+    %div
+      #contenedorImagenView
+        - if @owner.hasPicture
+          = image_tag("/userpics/" + @owner.id.to_s + ".jpg", :html => {:class => " takepicture", :title => "Foto del propietario"})
+        - else
+          = image_tag "user.png"
+        %br/
+      %h3 Propietario
+      #datosPropietario
+        = f.text_field :clave, :required=>"required", :readonly => "readonly"
+        = f.text_field :nombre, :required=>"required", :readonly => "readonly"
+        = f.text_field :pe, :required=>"required", :readonly => "readonly"
+%br
+%h3 Dispositivos del propietario
+%div#ownerdevices
+  %table.ui-grid-content.ui-widget-content
+    %thead
+      %tr
+        %th.ui-state-default Clave
+        %th.ui-state-default Tipo
+        %th.ui-state-default No. Serie
+        %th.ui-state-default Última actividad
+        %th.ui-state-default Opciones
+      - @owner.devices.each do |device|
+        %tbody
+          %tr
+            %td.ui-widget-content= link_to(device.devicetoken, search_devices_path(:id => device.devicetoken))
+            %td.ui-widget-content= device.tipo
+            %td.ui-widget-content= device.noserie
+            %td.ui-widget-content= device.ultimavez.strftime("%d %b %y %H:%M:%S")
+            %td.ui-widget-content
+              = link_to("Editar", search_devices_path(:id => device.devicetoken))
+              %span &nbsp;&nbsp;
+              = link_to("Registros", logs_entries_path(:id => device.id),:remote=> "true")
+    %tbody

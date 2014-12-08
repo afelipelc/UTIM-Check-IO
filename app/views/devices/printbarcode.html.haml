@@ -5,6 +5,20 @@ window.print(false);
 </script>
 %link{:rel => :stylesheet, :type => :"text/css", :href => "/stylesheets/printbarcode.css"}
 %body
-  %div#maincontent
-    %h3= @device.tipo + ": " + @device.owner.nombre
-    %div= image_tag("/barcodes/"+@device.devicetoken+".png")
+  - (1..4).each do |i|
+    %div#maincontent2
+      %h3= @device.tipo + " " + @device.color + " - " + @device.marca
+      %h3= @device.noserie
+      %h3= @device.owner.nombre
+      %div= image_tag("/barcodes/"+@device.devicetoken+".png")
+    %div#maincontent2
+      %h3= @device.tipo + " " + @device.color + " - " + @device.marca
+      %h3= @device.noserie
+      %h3= @device.owner.nombre
+      %div= image_tag("/barcodes/"+@device.devicetoken+".png")
+    %div#maincontent2
+      %h3= @device.tipo + " " + @device.color + " - " + @device.marca
+      %h3= @device.noserie
+      %h3= @device.owner.nombre
+      %div= image_tag("/barcodes/"+@device.devicetoken+".png")
+    %div#separador

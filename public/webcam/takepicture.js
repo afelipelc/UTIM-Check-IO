@@ -30,7 +30,7 @@ function save_picture(){
 	}
 	if(data_uri != null)
 	{
-		Webcam.upload( data_uri, 'http://0.0.0.0:3000/devices/savepicture?id=' + idDev, AUTH_TOKEN, function(code, text) {
+		Webcam.upload( data_uri, 'http://0.0.0.0:3000/devices/savepicture?token=' + idDev, AUTH_TOKEN, function(code, text) {
 		// Upload complete!
 		// 'code' will be the HTTP response code from the server, e.g. 200
 		// 'text' will be the raw response content

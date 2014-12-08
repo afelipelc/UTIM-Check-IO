@@ -1,4 +1,6 @@
 class EntriesController < ApplicationController
+  before_action :authenticate_user!, :except => [:checkdevice, :logs]
+  load_and_authorize_resource
   before_action :set_entry, only: [:show, :edit, :update, :destroy]
 
   # GET /entries
@@ -64,16 +66,16 @@ class EntriesController < ApplicationController
     end
   end
 
+load_and_authorize_resource
 def checkdevice
     #respond_to do |format|
     #check for id type: 32371298:1:1
-      if params[:id]
-
-        if(params[:id].scan(/:/).length !=2)
+      if params[:key]
+        if(params[:key].scan(/:/).length != 2)
             flash[:error] = "Pase el código de barras del dispositivo sobre el lector."
             redirect_to :action => 'index'
         else
-          datosDev = params[:id].split(":")
+          datosDev = params[:key].split(":")
           hoy = Time.new
           #dispositivo con ingreso pero sin egreso
           #@entry = Entry.where(:device_id => params[:id], :ingreso => hoy.beginning_of_day..hoy.end_of_day, :egreso => nil).first
@@ -104,28 +106,33 @@ def checkdevice
             #registrar el ingreso
             #device = Device.find(params[:id])
             device = Device.validarToken(datosDev) #datosDev[0], datosDev[1].to_i, datosDev[2].to_i) #Device.find(datosDev[1].to_i)
-            if device.id>0  ## the device obtained is readonly caused by JOIN in validatToken method
-              #reload device in writemode
-              device = Device.find(device.id)
-                # if(device.owner_id != datosDev[2].to_i || device.owner.clave != datosDev[0])
-                #   flash[:error] = "El dispositivo no pertenece al propietario. \nPase el código de barras del dispositivo sobre el lector."
-                #   redirect_to :action => 'index'
-                #   return
-                # end
-                @entry = Entry.new
-                @entry.ingreso = Time.new
-                @entry.device = device
-                if(@entry.save)
-                  device.update_attribute(:ultimavez, Time.new)
-                  flash[:notice] = "Se ha Registrado el ingreso."
-                  redirect_to @entry
-                else
-                  flash[:error] = "Ocurrió un error al intentar registrar el Ingreso."
+            if !device.nil?
+              if device.id>0  ## the device obtained is readonly caused by JOIN in validatToken method
+                #reload device in writemode
+                device = Device.find(device.id)
+                  # if(device.owner_id != datosDev[2].to_i || device.owner.clave != datosDev[0])
+                  #   flash[:error] = "El dispositivo no pertenece al propietario. \nPase el código de barras del dispositivo sobre el lector."
+                  #   redirect_to :action => 'index'
+                  #   return
+                  # end
+                  @entry = Entry.new
+                  @entry.ingreso = Time.new
+                  @entry.device = device
+                  if(@entry.save)
+                    device.update_attribute(:ultimavez, Time.new)
+                    flash[:notice] = "Se ha Registrado el ingreso."
+                    redirect_to @entry
+                  else
+                    flash[:error] = "Ocurrió un error al intentar registrar el Ingreso."
+                    redirect_to :action => 'index'
+                  end  
+              else
+                  flash[:error] = "El dispositivo no pertenece al propietario. \nPase el código de barras del dispositivo sobre el lector."
                   redirect_to :action => 'index'
-                end  
+              end
             else
-                flash[:error] = "El dispositivo no pertenece al propietario. \nPase el código de barras del dispositivo sobre el lector."
-                redirect_to :action => 'index'
+              flash[:error] = "No se encontró el registro del dispositivo: "+params[:key]
+              redirect_to :action => 'index'
             end
           end
         end
@@ -146,11 +153,11 @@ def logs
     @entries = Entry.where(:ingreso => fecha.beginning_of_day..fecha.end_of_day).order(ingreso: :desc)
   else  
     hoy = Time.new
-    if params[:id]
-       @entries = Entry.where(:device_id => params[:id]).order(ingreso: :desc)
+    if params[:token]
+       @entries = Entry.where(:device_id => params[:token]).order(ingreso: :desc)
        if @entries.blank?
          @entries = Entry.where(:ingreso => hoy.beginning_of_day..hoy.end_of_day)
-         flash[:error] = "No se encontraron registros de este Dispositivo " + params[:id]
+         flash[:alert] = "No se encontraron registros de este Dispositivo " + params[:token]
        end
     else
       @entries = Entry.where(:ingreso => hoy.beginning_of_day..hoy.end_of_day).order(ingreso: :desc)
@@ -162,9 +169,18 @@ end
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_entry
-      @entry = Entry.find(params[:id])
+      # if(params[:key].scan(/:/).length == 2)
+      #   datosDev = params[:key].split(":")
+      #   hoy = Time.new
+      #   #dispositivo con ingreso pero sin egreso
+      #   #@entry = Entry.where(:device_id => params[:id], :ingreso => hoy.beginning_of_day..hoy.end_of_day, :egreso => nil).first
+      #   @entry = Entry.where(:device_id => datosDev[1].to_i, :ingreso => hoy.beginning_of_day..hoy.end_of_day, :egreso => nil).first
+      # else
+        @entry = Entry.find(params[:id])
+      #end
+
       rescue ActiveRecord::RecordNotFound
-        flash[:error] = "No se encontró el registro: " + params[:id]
+        flash[:alert] = "No se encontró el registro: " + params[:id]
         redirect_to :action => 'index'
     end
 

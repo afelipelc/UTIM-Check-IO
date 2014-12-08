@@ -20,13 +20,13 @@ private
   def data
     devices.map do |device|
       [
-        link_to(device.devicetoken, @view.search_devices_path(:id => device.devicetoken)),
+        link_to(device.devicetoken, @view.search_devices_path(:token => device.devicetoken)),
         device.tipo,
         device.noserie,
         device.owner.nombre,
         device.ultimavez.strftime("%d %b %y %H:%M:%S"),
-        link_to("Editar", @view.search_devices_path(:id => device.devicetoken)) + "  " +
-        link_to("Registros", @view.logs_entries_path(:id => device.id),:remote=> "true")
+        link_to("Editar", @view.search_devices_path(:token => device.devicetoken)) + "  " +
+        link_to("Registros", @view.logs_entries_path(:token => device.id),:remote=> "true")
         #link_to(device.id)
       ]
     end
