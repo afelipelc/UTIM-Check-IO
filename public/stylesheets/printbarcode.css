@@ -1,26 +1,35 @@
 /*need Disable Print Preview In Chrome*/
 @page 
 {
-  size: auto;   /* auto is the current printer page size */
-  margin: 0mm;  /* this affects the margin in the printer settings */
+  size: auto;  /* auto is the current printer page size */
+  margin: 5mm;  /* tenia 0 this affects the margin in the printer settings */
 }
 body{
   text-align: left;
   background-color: #f3f3f3;
-  height: 220px;
-  width: 320px;
+  /*height: 220px;
+  width: 320px;*/
 }
-#maincontent{
+#maincontent, #maincontent2{
   text-align: center;
   display: inline-block;
-  width: 290px;
-  height: 85px;
+  width: 225px; /* 290px; */
+  height: 122px; /*85px org*/
   /*min-width: auto;*/
   padding: 10px 10px 10px 10px;
   font: 18px 'lucida sans', 'trebuchet MS', 'Tahoma';
   border: 1px solid #000;
   border-radius: 4px; 
 }
+
+#maincontent{
+  margin-left: 280px;
+}
+#separador{
+  width: 10px;
+  height: 8px;
+}
+
 h3{
   text-align: center;	
   font-size: 16px;

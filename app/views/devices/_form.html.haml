@@ -42,7 +42,7 @@
           = p.select(:pe, [["Programa Educativo", ""],"Administración", "Alimentos", "Contaduría", "Paramédico","TIC"])
       #datosDevice
         = f.select(:tipo, [["Tipo de dispositivo", ""],"Laptop", "Cañon", "Cámara", "CPU","Monitor", "Impresora"], :required => "required")
-        = f.select(:marca, [["Marca", ""], "Acer", "Apple", "Asus","Dell", "HP", "Lanix","Lenovo", "Samsung","Sony", "Otra"], :required => "required")
+        = f.select(:marca, [["Marca", ""], "Acer", "Apple", "Asus","Dell", "Gateway","HP", "Lanix","Lenovo", "Samsung","Sony", "Otra"], :required => "required")
         = f.text_field :noserie, :required=>"required", :placeholder => "No. de Serie"
         = f.text_field :color, :placeholder => "Color"
         = f.text_field :nota, :placeholder => "Noda adicional (opcional)"
